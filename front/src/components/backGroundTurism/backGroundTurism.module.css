@@ -1,0 +1,295 @@
+/* @font-face {
+  font-family: "Teletactile";
+  src: url("../../../public/fonts/TeletactileRus.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+} */
+
+.wrapper {
+  position: relative;
+  min-height: 100vh;
+  /* font-family: "Teletactile", sans-serif; */
+  overflow-x: hidden;
+}
+
+.videoBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(20, 18, 18, 0.6);
+  z-index: -1;
+}
+
+.container {
+  position: relative;
+  max-width: 860px;
+  padding: 4rem 2rem;
+  margin: 0 auto;
+  color: #f4ede7;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.title {
+  font-size: 2.8rem;
+  text-align: center;
+  margin-bottom: 2.5rem;
+  color: #fff9f1;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.lead {
+  font-size: 1.3rem;
+  text-align: center;
+  margin-bottom: 2.5rem;
+  color: #e9e3dc;
+  line-height: 1.7;
+}
+
+.section {
+  margin-bottom: 3rem;
+}
+
+.subtitle {
+  font-size: 1.7rem;
+  margin-bottom: 1rem;
+  color: #ffeccf;
+  border-left: 4px solid #ffd3a0;
+  padding-left: 0.7rem;
+}
+
+.paragraph {
+  font-size: 1.15rem;
+  line-height: 1.9;
+  margin-bottom: 1.2rem;
+  color: #e7dfd8;
+}
+
+.list {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 1.2rem;
+}
+
+.list li {
+  padding-left: 1.2rem;
+  position: relative;
+  margin-bottom: 0.7rem;
+  font-size: 1.1rem;
+}
+
+.footerNote {
+  font-size: 1.2rem;
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e1dcd6;
+}
+
+a {
+  color: #ffd7a1;
+  text-decoration: underline dashed;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: #ffb75d;
+}
+
+.imageGallery {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.imageGallery img {
+  width: 180px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
+  object-fit: cover;
+}
+
+.imageGallery img:hover {
+  transform: scale(1.03);
+}
+
+.mapContainer {
+  margin: 2rem 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+.photoButton {
+  background-color: #fff0dd;
+  color: #3b2f1d;
+  padding: 0.8rem 1.4rem;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.photoButton:hover {
+  background-color: #ffe1bb;
+}
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.modalContent {
+  background: linear-gradient(145deg, #2b2b2b, #1f1f1f);
+  border-radius: 16px;
+  padding: 24px;
+  width: 100%;
+  max-width: 820px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  position: relative;
+  animation: slideUp 0.4s ease-out;
+}
+
+.closeButton {
+  position: absolute;
+  top: 14px;
+  right: 20px;
+  font-size: 2rem;
+  color: #e7dfd8;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.closeButton:hover {
+  transform: rotate(90deg);
+  color: #ffcc99;
+}
+
+.sliderImage {
+  width: 100%;
+  max-height: 500px;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.sliderImage:hover {
+  transform: scale(1.02);
+}
+
+.caption {
+  margin-top: 12px;
+  font-size: 1.05rem;
+  color: #f0e8dc;
+  text-align: center;
+  font-style: italic;
+  letter-spacing: 0.3px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.routeGallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.routeCard {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.routeImage {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  object-fit: cover;
+}
+
+.routeCaption {
+  margin-top: 0.8rem;
+  font-size: 0.95rem;
+  color: #e9dfd4;
+  font-style: italic;
+  line-height: 1.4;
+}
+.routeSwiper {
+  margin-top: 1.5rem;
+  cursor:grab;
+}
+
+.routeCard {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 1rem;
+}
+
+.routeImage {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  object-fit: cover;
+}
+
+.routeCaption {
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: #e9dfd4;
+  font-style: italic;
+  line-height: 1.6;
+}
+

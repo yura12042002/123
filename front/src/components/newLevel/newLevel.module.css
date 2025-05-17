@@ -1,0 +1,78 @@
+.wrapper {
+  position: relative;
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  width: 50%;
+  height: 60vh;
+}
+
+.containerDrag {
+  width: 100%;
+}
+
+.containerBlock {
+  position: absolute;
+  width: 400px;
+  cursor: grab;
+  transition: transform 0.2s ease-in-out;
+  z-index: 1;
+  will-change: transform;
+}
+
+.containerBlock:active {
+  cursor: grabbing;
+  transform: scale(1.5);
+}
+
+.hint {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.95);
+  color: #222;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: clamp(14px, 2vw, 18px);
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  z-index: 10;
+}
+
+
+@media (max-width: 1024px) {
+  .containerBlock {
+    width: 250px;
+  }
+
+  .wrapper {
+    height: 70vh;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 100%;
+  }
+}
