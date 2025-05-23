@@ -1,0 +1,38 @@
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.icon {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  transition: opacity 1s ease-in-out;
+  opacity: 0.8;
+}
+
+@media (max-width: 1024px) {
+  .icon {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+@media (max-width: 768px) {
+  .icon {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .icon {
+    width: 50px;
+    height: 50px;
+  }
+}

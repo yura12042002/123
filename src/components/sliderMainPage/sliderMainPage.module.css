@@ -1,0 +1,34 @@
+.sliderWrapper {
+  width: 100%;
+  max-width: 99vw; 
+  margin: 40px auto;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sliderRow,
+.sliderRowReverse {
+  width: 100%;
+  overflow: hidden;
+}
+
+.sliderItem {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.sliderImage {
+  max-height: 80px;
+  max-width: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.sliderImage:hover {
+  transform: scale(1.1);
+}
+

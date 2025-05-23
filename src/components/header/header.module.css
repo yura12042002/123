@@ -1,0 +1,116 @@
+.header {
+  width: 100%;
+  position: relative;
+  z-index: 10000;
+  padding: 10px 15px;
+  border-bottom: 1px solid black;
+}
+
+.headerContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logoWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.headerImgLink img {
+  width: clamp(100px, 15vw, 180px);
+  height: auto;
+}
+
+.headerBurger {
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 10001;
+}
+
+.menuContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  z-index: 10000;
+  overflow: hidden;
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.topButtons {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  padding-bottom: 10px;
+  border-bottom: 1px solid black;
+}
+
+.headerBtn {
+  font-size: 16px;
+  color: #010500;
+  border: none;
+  background: transparent;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.tabMenu {
+  position: relative;
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-top: 20px;
+  height: 100vh;
+
+}
+
+.tab {
+  padding: 15px;
+  border: 1px solid black;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  background: white;
+  position: absolute;
+  transition: transform 0.3s ease-in-out;
+  height: 100vh;
+  
+}
+
+.closeMenu {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+@media (max-width: 796px) {
+  .headerContent {
+    justify-content: space-between;
+  }
+  .closeMenu {
+    top: 17px;
+    right: 10px;
+  }
+
+  .headerBtn {
+    font-size: 20px;
+    text-decoration: none;
+  }
+  .tabMenu {
+    width: 100%;
+  }
+}
