@@ -5,9 +5,9 @@ import Header from "../components/header/Header";
 const TurismPage = () => {
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
       <BackGroundTurism />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

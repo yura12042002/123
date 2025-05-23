@@ -265,7 +265,7 @@ a:hover {
 }
 .routeSwiper {
   margin-top: 1.5rem;
-  cursor:grab;
+  cursor: grab;
 }
 
 .routeCard {
@@ -293,3 +293,48 @@ a:hover {
   line-height: 1.6;
 }
 
+@media (max-width: 760px) {
+  body {
+    font-size: 20px; /* Было 16px — теперь на 25% больше */
+    line-height: 1.2;
+  }
+
+  .title {
+    font-size: 2.8rem; /* Было 1.6rem */
+  }
+
+  .lead {
+    font-size: 1.6rem;
+    line-height: 1.8;
+  }
+
+  .subtitle {
+    font-size: 2.2rem;
+  }
+
+  .paragraph,
+  .list li,
+  .caption,
+  .footerNote {
+    font-size: 1.7rem; /* Было 0.95–1.05rem */
+    line-height: 1.3;
+  }
+
+  .photoButton {
+    font-size: 1.2rem;
+    padding: 1rem 1.4rem;
+  }
+
+  .modalContent {
+    padding: 18px;
+  }
+
+  .sliderImage {
+    max-height: 350px;
+  }
+
+  .routeCaption {
+    font-size: 1.2rem;
+    line-height: 1.7;
+  }
+}
