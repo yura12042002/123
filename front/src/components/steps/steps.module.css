@@ -1,0 +1,201 @@
+.steps {
+  margin-top: 60px;
+  text-align: center;
+  padding: 0 16px;
+}
+
+.stepsTitle {
+  margin-bottom: 30px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #1e1e1e;
+}
+
+.sliderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  min-height: 200px;
+  position: relative;
+  flex-wrap: wrap;
+}
+
+/* Step Card */
+.stepCard {
+  background: linear-gradient(145deg, #ffffff, #f3f3f3);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 28px 24px;
+  width: 100%;
+  max-width: 520px;
+  text-align: center;
+  font-size: 16px;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease-in-out, box-shadow 0.3s ease;
+}
+
+.stepCard:hover {
+  transform: scale(1.015);
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.12);
+}
+
+.stepNum {
+  font-size: 26px;
+  font-weight: 600;
+  color: #007aff;
+  margin-bottom: 12px;
+}
+
+/* Arrow buttons */
+.arrow {
+  background: none;
+  border: none;
+  font-size: 32px;
+  cursor: pointer;
+  padding: 8px;
+  user-select: none;
+  color: #007aff;
+  transition: color 0.2s ease-in-out, transform 0.2s;
+}
+
+.arrow:hover {
+  color: #005fcc;
+  transform: scale(1.1);
+}
+
+.arrow:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Banner: завершено */
+.completeBanner {
+  margin-top: 24px;
+  padding: 18px 24px;
+  background: linear-gradient(135deg, #d7fbe8, #e3fcec);
+  border: 1px dashed #34d399;
+  color: #065f46;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+  box-shadow: 0 4px 16px rgba(52, 211, 153, 0.25);
+}
+
+/* Кнопка "Начать заново" */
+.resetBtn {
+  margin-top: 14px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  background: linear-gradient(145deg, #10b981, #059669);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(16, 185, 129, 0.3);
+  transition: background 0.2s ease-in-out, transform 0.2s ease;
+}
+
+.resetBtn:hover {
+  background: #047857;
+  transform: translateY(-2px);
+}
+
+/* Telegram block */
+.telegramBlock {
+  margin-top: 60px;
+  padding: 28px 24px;
+  background: linear-gradient(145deg, #e6f2fe, #f2faff);
+  border: 1px solid #cce7ff;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 122, 255, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  flex-wrap: wrap;
+}
+
+.avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #007aff;
+  box-shadow: 0 0 0 4px #ffffff;
+}
+
+.telegramText h4 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #007aff;
+}
+
+.telegramText p {
+  margin: 10px 0 16px;
+  font-size: 15px;
+  color: #2c3e50;
+}
+
+.telegramBtn {
+  background-color: #007aff;
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  box-shadow: 0 3px 12px rgba(0, 122, 255, 0.25);
+  transition: background 0.3s ease, transform 0.2s ease;
+  display: inline-block;
+}
+
+.telegramBtn:hover {
+  background-color: #005fcc;
+  transform: translateY(-2px);
+}
+
+
+@media (max-width: 768px) {
+  .sliderContainer {
+    flex-direction: column;
+  }
+
+  .arrow {
+    font-size: 26px;
+  }
+
+  .stepCard {
+    max-width: 100%;
+    padding: 20px;
+  }
+
+  .telegramBlock {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .telegramText h4 {
+    font-size: 18px;
+  }
+
+  .telegramText p {
+    font-size: 14px;
+  }
+
+  .avatar {
+    width: 60px;
+    height: 60px;
+  }
+
+  .telegramBtn {
+    width: 100%;
+  }
+}

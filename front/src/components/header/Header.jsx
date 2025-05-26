@@ -6,8 +6,6 @@ import "reactflow/dist/style.css";
 import style from "./header.module.css";
 import { Link, useNavigate } from "react-router-dom";
 
-
-
 const tabs = [
   "№ ГЛАВНАЯ",
   "№ НАСТАВНИЧЕСТВО",
@@ -128,6 +126,9 @@ const Header = () => {
     if (tab === "№ ТУРИЗМ") {
       navigate("/travel");
     }
+    if (tab === "№ ФИНАНСЫ") {
+      navigate("/finance");
+    }
   };
 
   return (
@@ -194,9 +195,19 @@ const Header = () => {
                 </motion.div>
               ))}
             </nav>
-            <button className={style.closeMenu} onClick={toggleMenu}>
+            <motion.button
+              className={style.closeMenu}
+              onClick={toggleMenu}
+              initial={{ opacity: 0, y: -20 }}
+              animate={{
+                opacity: 1,
+                y: 0,
+                transition: { duration: 0.4, ease: "easeOut" },
+              }}
+              exit={{ opacity: 0, y: -20, transition: { duration: 0.3 } }}
+            >
               <img src="./images/main_pictures/close.svg" alt="Закрыть" />
-            </button>
+            </motion.button>
           </motion.div>
         )}
       </AnimatePresence>

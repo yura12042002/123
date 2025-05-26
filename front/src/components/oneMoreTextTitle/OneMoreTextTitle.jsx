@@ -2,8 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { coyWithoutShadows } from "react-syntax-highlighter/dist/esm/styles/prism";
 
-const codeTitleBase = "LET MHE = ВЫВЕСТИ ТЕБЯ НА НОВЫЙ УРОВЕНЬ!";
-const OneMoreTextTitle = () => {
+const OneMoreTextTitle = ({ codeTitleBase }) => {
   const [renderedTitle, setRenderedTitle] = useState("");
   const [charIndex, setCharIndex] = useState(0);
   const [formattedTitle, setFormattedTitle] = useState(codeTitleBase);
@@ -14,9 +13,18 @@ const OneMoreTextTitle = () => {
       let newTitle = codeTitleBase;
 
       if (screenWidth < 600) {
-        newTitle = "LET MHE = ВЫВЕСТИ \nТЕБЯ НА НОВЫЙ УРОВЕНЬ!";
+        newTitle = codeTitleBase
+          .split(" ")
+          .map((word, idx) => (idx % 4 === 0 && idx !== 0 ? word + "\n" : word))
+          .join(" ");
       } else if (screenWidth < 400) {
-        newTitle = "LET MHE = \n ВЫВЕСТИ ТЕБЯ НА НОВЫЙ УРОВЕНЬ!";
+        newTitle = codeTitleBase
+          .split(" ")
+          .map((word, idx) =>
+            idx % 3 === 0 && idx % 3 !== 0 ? word + "\n" : word
+          )
+
+          .join(" ");
       }
 
       setFormattedTitle(newTitle);
@@ -45,14 +53,11 @@ const OneMoreTextTitle = () => {
         background: "transparent",
         color: "#282C34",
         fontFamily: "Fira Code, Consolas, Monaco, monospace",
-        fontSize: "clamp(1.2rem, 2vw, 1.8rem)",
-        lineHeight: "1.6",
+        fontSize: "1.3rem",
         textAlign: "center",
         padding: "10px",
-        maxWidth: "90vw",
+        maxWidth: "95vw",
         margin: "0 auto",
-        whiteSpace: "pre-wrap",
-        wordBreak: "break-word",
         overflowWrap: "break-word",
         marginBottom: "30px",
       }}

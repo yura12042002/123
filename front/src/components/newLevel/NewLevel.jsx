@@ -127,7 +127,9 @@ const NewLevel = () => {
     <div ref={containerRef} className={styles.wrapper}>
       <svg ref={svgRef} className={styles.svg}></svg>
 
-      <OneMoreTextTitle />
+      <OneMoreTextTitle
+        codeTitleBase={"LET MHE = ВЫВЕСТИ ТЕБЯ НА НОВЫЙ УРОВЕНЬ!"}
+      />
       <div className={styles.container}>
         {showHint && (
           <div className={styles.hint}>

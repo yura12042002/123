@@ -90,7 +90,7 @@
 .closeMenu {
   position: absolute;
   top: 15px;
-  right: 15px;
+  right: 30px;
   background: none;
   border: none;
   font-size: 24px;
@@ -103,7 +103,7 @@
   }
   .closeMenu {
     top: 17px;
-    right: 10px;
+    right: 20px;
   }
 
   .headerBtn {

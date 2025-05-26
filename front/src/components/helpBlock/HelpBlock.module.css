@@ -1,0 +1,91 @@
+.help {
+  background: linear-gradient(145deg, #e6f2fe, #f4faff);
+  color: #1f2d3d;
+  padding: 60px 20px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 10px 32px rgba(0, 122, 255, 0.05);
+}
+
+.helpTitle {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 40px;
+  color: #007aff;
+}
+
+.helpCards {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: #fff;
+  border: 2px solid transparent;
+  border-radius: 16px;
+  padding: 24px 20px;
+  width: 300px;
+  min-height: 250px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: left;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 28px rgba(0, 122, 255, 0.1);
+}
+
+.cardPink {
+  border-color: #e96dda;
+}
+
+.cardYellow {
+  border-color: #f5c842;
+}
+
+.cardBlue {
+  border-color: #89a2d8;
+}
+
+.iconWrapper {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 16px;
+}
+
+.icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.text h3 {
+  font-size: 17px;
+  margin-bottom: 8px;
+  color: #1e1e1e;
+  font-weight: 600;
+}
+
+.text p {
+  font-size: 14px;
+  color: #4b4b4b;
+  line-height: 1.5;
+}
+
+/* Адаптив */
+@media (max-width: 768px) {
+  .card {
+    width: 100%;
+    max-width: 90%;
+  }
+
+  .helpTitle {
+    font-size: 20px;
+  }
+}

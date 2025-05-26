@@ -5,6 +5,7 @@ import { coyWithoutShadows } from "react-syntax-highlighter/dist/esm/styles/pris
 import { motion } from "framer-motion";
 import styles from "./mentorPrivew.module.css";
 import BlockTextLayout from "../layouts/blockTextLayout/BlockTextLayout";
+import OneMoreTextTitle from "../oneMoreTextTitle/OneMoreTextTitle";
 
 const arr = [
   {
@@ -21,73 +22,12 @@ const arr = [
   },
 ];
 
-const codeTitleBase = `let мне = помочь тебе c frontend-разработкой!`;
-
 const MentorPrivew = () => {
-  const [renderedTitle, setRenderedTitle] = useState("");
-  const [charIndex, setCharIndex] = useState(0);
-
-  const [formattedTitle, setFormattedTitle] = useState(codeTitleBase);
-
-  useEffect(() => {
-    const handleResize = () => {
-      const screenWidth = window.innerWidth;
-      let newTitle = codeTitleBase;
-
-      if (screenWidth < 600) {
-        newTitle = `let мне = помочь тебе\n c frontend-разработкой!`;
-      } else if (screenWidth < 400) {
-        newTitle = `let мне = помочь\n тебе\n c frontend-разработкой!`;
-      }
-
-      setFormattedTitle(newTitle);
-    };
-
-    window.addEventListener("resize", handleResize);
-    handleResize();
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  useEffect(() => {
-    if (charIndex < formattedTitle.length) {
-      const timer = setTimeout(() => {
-        setRenderedTitle((prev) => prev + formattedTitle[charIndex]);
-        setCharIndex((prev) => prev + 1);
-      }, 50);
-      return () => clearTimeout(timer);
-    }
-  }, [charIndex, formattedTitle]);
-
   return (
     <div className={styles.container}>
-      <motion.div
-        className={styles.title}
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: "easeOut" }}
-      >
-        <SyntaxHighlighter
-          language="javascript"
-          style={coyWithoutShadows}
-          customStyle={{
-            background: "transparent",
-            color: "#282C34",
-            fontFamily: "Fira Code, Consolas, Monaco, monospace",
-            fontSize: "clamp(1.2rem, 2vw, 1.8rem)",
-            lineHeight: "1.6",
-            textAlign: "center",
-            padding: "10px",
-            maxWidth: "90vw",
-            margin: "0 auto",
-            whiteSpace: "pre-wrap",
-            wordBreak: "break-word",
-            overflowWrap: "break-word",
-          }}
-        >
-          {renderedTitle || "// Загружается..."}
-        </SyntaxHighlighter>
-      </motion.div>
+      <OneMoreTextTitle
+        codeTitleBase={`let мне = помочь тебе c frontend разработкой`}
+      />
 
       <motion.div
         className={styles.containerPrev}
