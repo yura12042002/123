@@ -182,8 +182,9 @@ const Header = () => {
                     borderTopRightRadius: "10px",
                     height: "60vh",
                   }}
+                  onClick={() => handleTabClick(tab)}
                 >
-                  <h2 onClick={() => handleTabClick(tab)}>{tab}</h2>
+                  <h2>{tab}</h2>
                   {tab === "№ РОУДМАП" && (
                     <div
                       className={style.roadmapContainer}
