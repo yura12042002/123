@@ -113,7 +113,7 @@ const FlyingIcons = ({ show }) => {
         );
 
         gsap.to(iconElement, {
-          opacity: isOverlapping ? 0.3 : 1,
+          opacity: isOverlapping ? 0.2 : 1,
           duration: 0.3,
         });
       });

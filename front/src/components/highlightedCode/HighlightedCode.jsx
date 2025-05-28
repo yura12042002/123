@@ -70,7 +70,7 @@ const HighlightedCode = () => {
   }, [charIndex]);
 
   return (
-    <div style={{ width: "100%", maxWidth: "95vw", overflowX: "auto", margin: '0 auto' }}>
+    <div style={{ width: "100%", maxWidth: "800px", overflowX: "auto", margin: '0 auto' }}>
       <SyntaxHighlighter
         language="javascript"
         style={{ ...coyWithoutShadows, ...customStyle }}

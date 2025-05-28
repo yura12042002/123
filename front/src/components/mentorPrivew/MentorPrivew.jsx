@@ -43,15 +43,14 @@ const MentorPrivew = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, ease: "easeOut" }}
           >
-            {/* <ReactPlayer
-              url="videos/IMG_2187.MOV"
+            <ReactPlayer
+              url="videos/Welcome video.mp4"
               width="100%"
               height="100%"
               playing={false}
               controls={true}
-              loop={true}
               muted={false}
-            /> */}
+            />
           </motion.div>
           <motion.button
             className={styles.learnMoreBtn}

@@ -3,11 +3,11 @@ import Header from "../../header/Header";
 import Main from "../../main/Main";
 import Footer from "../../footer/Footer";
 
-const Layout = ({layoutText}) => {
+const Layout = () => {
   return (
     <div className='mainContainer'>
       <Header />
-      <Main layoutText={layoutText} />
+      <Main />
       <Footer />
     </div>
   );

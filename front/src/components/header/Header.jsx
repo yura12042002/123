@@ -8,8 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const tabs = [
   "№ ГЛАВНАЯ",
-  "№ НАСТАВНИЧЕСТВО",
-  "№ О НАСТАВНИКЕ",
+  "№ МЕНТОРСТВО",
   "№ ТУРИЗМ",
   "№ ПОДПИСКИ",
   "№ ФИНАНСЫ",
@@ -128,6 +127,12 @@ const Header = () => {
     }
     if (tab === "№ ФИНАНСЫ") {
       navigate("/finance");
+    }
+    if (tab === "№ ГЛАВНАЯ") {
+      navigate("/");
+    }
+    if (tab === "№ МЕНТОРСТВО") {
+      navigate("/mentor");
     }
   };
 
