@@ -1,0 +1,11 @@
+.codeCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100vw;
+  height: 120vh;
+  pointer-events: none;
+  user-select: none;
+  background-color: black;
+}

@@ -1,0 +1,58 @@
+.chatWrapper {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 400px;
+  max-height: 700px;
+  z-index: 9999;
+  display: none;
+}
+
+@media (min-width: 769px) {
+  .chatWrapper {
+    display: block;
+  }
+}
+
+.chatBox {
+  background: #0a0a0a;
+  border: 1px solid #00ff99;
+  border-radius: 12px;
+  padding: 10px;
+  color: white;
+  overflow-y: auto;
+  max-height: 400px;
+  font-family: "Courier New", monospace;
+
+  /* Скрываем скролл */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+.chatBox::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+.inputWrapper {
+  display: flex;
+  margin-top: 8px;
+}
+
+.input {
+  flex: 1;
+  padding: 6px 10px;
+  background: #111;
+  border: 1px solid #00ff99;
+  color: white;
+  border-radius: 8px 0 0 8px;
+}
+
+.sendBtn {
+  background: #00ff99;
+  border: none;
+  color: black;
+  font-weight: bold;
+  padding: 0 14px;
+  border-radius: 0 8px 8px 0;
+  cursor: pointer;
+}

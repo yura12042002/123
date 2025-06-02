@@ -1,0 +1,35 @@
+.iconWrapper {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 10000;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(197, 196, 196, 0.6);
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #00ff99;
+  transition: background 0.3s;
+}
+
+.iconWrapper:hover {
+  background: rgba(0, 255, 153, 0.1);
+}
+
+.icon {
+  color: #00ff99;
+}
+
+.label {
+  color: #00ff99;
+  font-size: 14px;
+  font-family: "Courier New", monospace;
+}
+
+@media (max-width: 768px) {
+  .iconWrapper {
+    position: absolute;
+  }
+}

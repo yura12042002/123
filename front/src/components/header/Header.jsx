@@ -121,6 +121,10 @@ const Header = () => {
 
   const navigate = useNavigate();
 
+  const handleClickSignIn = () => {
+    navigate("/auth")
+  }
+
   const handleTabClick = (tab) => {
     if (tab === "№ ТУРИЗМ") {
       navigate("/travel");
@@ -166,7 +170,7 @@ const Header = () => {
             exit="exit"
           >
             <div className={style.topButtons}>
-              <button className={style.headerBtn}>Вход / Регистрация</button>
+              <button className={style.headerBtn} onClick={() => handleClickSignIn()}>Вход / Регистрация</button>
             </div>
             <nav className={style.tabMenu}>
               {tabs.map((tab, index) => (
