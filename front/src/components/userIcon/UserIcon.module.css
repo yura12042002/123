@@ -31,5 +31,15 @@
 @media (max-width: 768px) {
   .iconWrapper {
     position: absolute;
+      border: 1px solid black;
   }
+  .icon {
+  color: black;
+}
+
+.label {
+  color: black;
+  font-size: 14px;
+  font-family: "Courier New", monospace;
+}
 }

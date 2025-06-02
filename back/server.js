@@ -15,13 +15,7 @@ connectDB();
 
 const app = express();
 
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    credentials: true,
-  })
-);
+app.use(cors());
 
 const OpenAI = require("openai");
 const client = new OpenAI({
@@ -29,8 +23,6 @@ const client = new OpenAI({
 });
 
 const token = "8006099368:AAFCAKTMMJuKp_v21mFNLRHfdjpYLouWcFM";
-
-const text = "";
 
 const bot = new TelegramBot(token, { polling: true });
 
@@ -40,10 +32,6 @@ bot.onText(/\/echo (.+)/, (msg, match) => {
 
   bot.sendMessage(chatId, resp);
 });
-
-const templateAnswerFunc = () => {
-  console.log(123);
-};
 
 bot.on("message", async (msg) => {
   const chatId = msg.chat.id;
@@ -67,7 +55,7 @@ bot.on("message", async (msg) => {
         "textContent": "твое сообщение",
         "buttons": [] // массив строк с кнопками на которые может нажать пользователь пиши их отталкиваясь от контекста сообщений 
 }
-!!! предлагай варианты ответа только те, на которые ты знаешь ответ из текста выше это очень важно `,
+!!! предлагай варианты ответа только те, на которые ты знаешь ответ из текста, если понимаешь что клиент готов забронироватьв сообщении отдельно укажи способ связи со мной, ссылка на мой тг - @yurasokol, также добавляй прикольные смайлики к кнопкам выше это очень важно `,
       },
     ],
     model: "gpt-4.1",

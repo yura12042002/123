@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { AnimatedBackground } from "animated-backgrounds";
 import styles from "./authPage.module.css";
 import CodeBackground from "../components/codeBackground/CodeBackground";
 import GptChat from "../components/GPTChat/GPTChat";
 import UserIcon from "../components/userIcon/UserIcon";
 
 const AuthPage = () => {
+  const [step, setStep] = useState("register");
+  const [verificationCode, setVerificationCode] = useState("");
+
   const [formData, setFormData] = useState({
     telegram: "",
     firstName: "",
@@ -23,14 +25,29 @@ const AuthPage = () => {
     setFormData({ ...formData, [name]: name === "avatar" ? files[0] : value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
       setError("Пароли не совпадают");
       return;
     }
-    setError("");
-    console.log("Регистрация:", formData);
+
+    try {
+      const res = await fetch("http://localhost:5000/api/send-code", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ telegram: formData.telegram }),
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        setStep("verify");
+      } else {
+        setError(data.error || "Ошибка отправки кода");
+      }
+    } catch (err) {
+      setError("Сервер не отвечает");
+    }
   };
 
   return (
@@ -51,7 +68,7 @@ const AuthPage = () => {
               />
             </label>
             <label>
-              Имя:{" "}
+              Имя:
               <input
                 type="text"
                 name="firstName"
@@ -127,6 +144,43 @@ const AuthPage = () => {
           <UserIcon isLoggedIn={true} />
         </div>
         <GptChat />
+        {step === "verify" && (
+          <div className={styles.modal}>
+            <div>
+              <h3>Введите код из Telegram</h3>
+              <input
+                type="text"
+                placeholder="6-значный код"
+                value={verificationCode}
+                onChange={(e) => setVerificationCode(e.target.value)}
+              />
+              <button
+                onClick={async () => {
+                  const res = await fetch(
+                    "http://localhost:5000/api/verify-code",
+                    {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({
+                        telegram: formData.telegram,
+                        code: verificationCode,
+                      }),
+                    }
+                  );
+                  const data = await res.json();
+                  if (data.success) {
+                    alert("Успешная регистрация!");
+                    setStep("done");
+                  } else {
+                    setError(data.error || "Неверный код");
+                  }
+                }}
+              >
+                Подтвердить
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );

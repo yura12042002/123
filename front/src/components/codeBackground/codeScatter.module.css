@@ -4,8 +4,14 @@
   left: 0;
   z-index: 0;
   width: 100vw;
-  height: 120vh;
+  height: 100vh;
   pointer-events: none;
   user-select: none;
   background-color: black;
+}
+
+@media (width < 769px) {
+  .codeCanvas {
+    height: 120vh;
+  }
 }
