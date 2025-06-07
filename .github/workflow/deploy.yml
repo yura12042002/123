@@ -1,0 +1,42 @@
+name: Remote Docker Compose Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: SSH into server and deploy using docker-compose
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          port: ${{ secrets.SERVER_PORT }}
+          envs: GITHUB_REPO,BRANCH
+          script: |
+            export GITHUB_REPO="${{ github.repository }}"
+            export BRANCH="main"
+
+            echo "Cleaning up previous deployment..."
+            rm -rf appdir
+            git clone --single-branch --branch $BRANCH https://github.com/$GITHUB_REPO.git appdir
+            cd appdir/back
+
+            echo "Creating .env file..."
+            cat <<EOF > .env
+OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
+MONGODB_URI=${{ secrets.MONGODB_URI }}
+BOT_TOKEN_TURISM=${{ secrets.BOT_TOKEN_TURISM }}
+BOT_TOKEN_AUTHORIZE=${{ secrets.BOT_TOKEN_AUTHORIZE }}
+ADMIN_TELEGRAM_ID=${{ secrets.ADMIN_TELEGRAM_ID }}
+EOF
+
+            echo "Stopping and removing old containers..."
+            docker-compose down
+
+            echo "Building and starting new containers..."
+            docker-compose up -d --build
