@@ -5,7 +5,10 @@ dotenv.config();
 
 const initializeDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI);
+    await mongoose.connect(process.env.MONGODB_URI, {
+      
+    }
+    );
     console.log("База данных успешно подключена");
   } catch (err) {
     console.error(`Ошибка при подключении: ${err.message}`);

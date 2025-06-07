@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const tabs = [
   "№ ГЛАВНАЯ",
+  "№ ПРОФИЛЬ",
   "№ МЕНТОРСТВО",
   "№ ТУРИЗМ",
   "№ ПОДПИСКИ",
@@ -122,8 +123,8 @@ const Header = () => {
   const navigate = useNavigate();
 
   const handleClickSignIn = () => {
-    navigate("/auth")
-  }
+    navigate("/auth");
+  };
 
   const handleTabClick = (tab) => {
     if (tab === "№ ТУРИЗМ") {
@@ -170,7 +171,12 @@ const Header = () => {
             exit="exit"
           >
             <div className={style.topButtons}>
-              <button className={style.headerBtn} onClick={() => handleClickSignIn()}>Вход / Регистрация</button>
+              <button
+                className={style.headerBtn}
+                onClick={() => handleClickSignIn()}
+              >
+                Вход / Регистрация
+              </button>
             </div>
             <nav className={style.tabMenu}>
               {tabs.map((tab, index) => (

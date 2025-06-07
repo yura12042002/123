@@ -5,6 +5,7 @@ import TurismPage from "./pages/TurismPage";
 import FinancePage from "./pages/FinancePage";
 import HomePage from "./pages/HomePage";
 import AuthPage from "./pages/AuthPage";
+import SignInForm from "./components/signInForm/SignInForm";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/mentor" element={<MainPage />} />
         <Route path="/travel" element={<TurismPage />} />
         <Route path="/preview" element={<PreviewPage />} />
+         <Route path="/login" element={<SignInForm />} />
         <Route path="/finance" element={<FinancePage />} />
         <Route path="/auth" element={<AuthPage />} />
       </Routes>
