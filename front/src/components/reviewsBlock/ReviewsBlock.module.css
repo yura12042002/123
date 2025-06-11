@@ -1,0 +1,174 @@
+.container {
+  width: 90%;
+  max-width: 960px;
+  max-height: 80vh;
+  margin: 60px auto;
+  background-color: #1e1e1e;
+  border-radius: 12px;
+  border: 1px solid #2c2c2c;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  font-family: "Fira Code", monospace;
+  overflow-y: auto;
+  backdrop-filter: blur(6px);
+  position: relative;
+  transition: all 0.3s ease;
+  scrollbar-gutter: stable both-edges;
+}
+
+.container:hover {
+  box-shadow: 0 12px 42px rgba(0, 0, 0, 0.6);
+}
+
+.tab {
+  background-color: #2d2d2d;
+  color: #c5c5c5;
+  padding: 12px 20px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-bottom: 1px solid #3a3a3a;
+  border-radius: 12px 12px 0 0;
+  letter-spacing: 0.5px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.codeBlock {
+  background-color: #1e1e1e;
+  color: #abb2bf;
+  padding: 28px 24px;
+  overflow-x: auto;
+  font-size: clamp(0.92rem, 1.2vw, 1.05rem);
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.review {
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px dashed #333;
+  animation: fadeUp 0.3s ease-out;
+  background-color: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+  padding: 20px;
+  transition: background-color 0.2s ease;
+}
+
+.review:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.review:last-child {
+  margin-bottom: 0;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.reviewRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-top: 10px;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #444;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease;
+}
+
+.avatar:hover {
+  transform: scale(1.05);
+}
+
+.reviewContent {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.comment {
+  color: #5c6370;
+  font-style: italic;
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.9rem;
+}
+
+.key {
+  color: #c678dd;
+  font-weight: 500;
+}
+
+.operator {
+  color: #56b6c2;
+}
+
+.string {
+  color: #98c379;
+}
+
+.keyword {
+  color: #e06c75;
+  font-weight: bold;
+}
+
+.variable {
+  color: #d19a66;
+}
+
+.bracket {
+  color: #61afef;
+}
+
+.stars {
+  margin-top: 6px;
+  display: flex;
+  gap: 4px;
+  padding-left: 8px;
+  font-size: 1.3rem;
+}
+
+.star {
+  color: #888;
+  transition: color 0.3s ease;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+}
+
+.star.filled {
+  color: #ffd700;
+}
+
+.container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.container::-webkit-scrollbar-track {
+  background: #2d2d2d;
+  border-radius: 4px;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background: linear-gradient(120deg, #4b4b4b, #999);
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+
+.container::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(120deg, #666, #aaa);
+}
+
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

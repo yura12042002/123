@@ -38,9 +38,18 @@ const Finance = () => {
           </div>
           <div className={styles.cardScreen}>
             <img src="/images/money/oldPayments.jpg" alt="История транзакций" />
-            <p>История успешных переводов</p>
+            <p>История успешных переводов Грузия</p>
+          </div>
+          <div className={styles.cardScreen}>
+            <img src="/images/money/ziratTranz.jpg" alt="История транзакций Турция" />
+            <p>История успешных переводов Турция</p>
+          </div>
+          <div className={styles.cardScreen}>
+            <img src="/images/money/korona.jpg" alt="История транзакций" />
+            <p>История успешных переводов Korona</p>
           </div>
         </div>
+        
       </section>
 
       {/* Steps */}

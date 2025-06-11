@@ -1,8 +1,10 @@
 import React from "react";
 import MentorPrivew from "../components/mentorPrivew/MentorPrivew";
 import NewLevel from "../components/newLevel/NewLevel";
-import SliderMainPage from "../components/sliderMainPage/SliderMainPage";
+import ReviewsBlock from "../components/reviewsBlock/ReviewsBlock";
 import StudentsWork from "../components/studentsWorks/StudentsWork";
+import { reviews } from "../data/reviewData";
+
 
 const Mentor = () => {
   return (
@@ -10,18 +12,18 @@ const Mentor = () => {
       <MentorPrivew />
       <NewLevel />
       <StudentsWork />
-      {/* <SliderMainPage /> */}
+      <ReviewsBlock reviews={reviews} />
 
+      {/* <SliderMainPage /> */}
     </>
   );
 };
 
 export default Mentor;
 
+// user: Добрый день! Хочу записаться на прогулку завтра!
 
-// user: Добрый день! Хочу записаться на прогулку завтра! 
-
-// bot: Отличная идея! Завра ожидается ветер 1 м/c, солнечно 24 градуса. 
+// bot: Отличная идея! Завра ожидается ветер 1 м/c, солнечно 24 градуса.
 
 // user: Какие есть еще свободные даты?
 
@@ -29,6 +31,6 @@ export default Mentor;
 
 // Сколько будет стоить на 4 человека
 
-// Стоимость будет зависеть от выбранного маршрута (3 маршрута) 2 часа ссылка на маршрут (1500 тысячи с человека), 4 часа 
- 
+// Стоимость будет зависеть от выбранного маршрута (3 маршрута) 2 часа ссылка на маршрут (1500 тысячи с человека), 4 часа
+
 // также вы можете снять квартиру на время пребывания.

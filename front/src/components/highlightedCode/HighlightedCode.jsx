@@ -44,6 +44,8 @@ const customStyle = {
   },
 };
 
+
+
 const codeLines = [
   "IF (интересна frontend-разработка) {",
   "  // подробнее об обучении можешь узнать",

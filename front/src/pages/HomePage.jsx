@@ -4,6 +4,8 @@ import HighlightedCode from "../components/highlightedCode/HighlightedCode";
 import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
 import FlyingIcons from "../components/flyingIcons/FlyingIcons";
+import ReviewsCode from "../components/reviewsBlock/ReviewsBlock";
+import { reviews } from "../data/reviewData";
 
 const textMainPage = {
   title: "Обучение frontend-разработке",
@@ -14,12 +16,11 @@ const HomePage = () => {
   return (
     <>
       <Header />
-      <main>
+      <main >
         <BlockTextLayout layoutText={textMainPage} />
-        <HighlightedCode />
       </main>
+      <HighlightedCode />
       <FlyingIcons show={true} />
-
       <Footer />
     </>
   );
