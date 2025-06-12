@@ -1,0 +1,143 @@
+.heroSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 60px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  background-color: #dbe3ef;
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+
+.leftBlock {
+  flex: 1 1 400px;
+  min-width: 300px;
+}
+
+.rightBlock {
+  flex: 1 1 400px;
+  min-width: 300px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar {
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #ffffff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.title {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  line-height: 1.3;
+}
+
+.description {
+  font-size: 18px;
+  color: #444;
+  margin-bottom: 30px;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.primaryBtn,
+.secondaryBtn,
+.blueBtn {
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.primaryBtn {
+  background: #000;
+  color: #fff;
+}
+
+.primaryBtn:hover {
+  background: #222;
+}
+
+.secondaryBtn {
+  background: #eee;
+  color: #000;
+}
+
+.secondaryBtn:hover {
+  background: #ddd;
+}
+
+.blueBtn {
+  background: #e0f0ff;
+  color: #0056b3;
+}
+
+.blueBtn:hover {
+  background: #d0eaff;
+}
+
+.funFactBlock {
+  margin: 40px auto 0;
+  max-width: 900px;
+  background-color: #fff8e1;
+  padding: 20px 30px;
+  border-left: 6px solid #ffc107;
+  border-radius: 12px;
+  font-size: 18px;
+  line-height: 1.5;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .heroSection {
+    flex-direction: column;
+    text-align: center;
+    padding: 40px 16px;
+  }
+
+  .rightBlock {
+    order: -1;
+    margin-bottom: 20px;
+    padding: 0;
+    height: auto;
+    max-height: 220px;
+  }
+
+  .avatar {
+    width: 225px;
+    height: 225px;
+    margin: 0 auto;
+    border-width: 3px;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .description {
+    font-size: 16px;
+  }
+}

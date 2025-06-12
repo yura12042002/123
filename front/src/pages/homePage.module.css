@@ -1,0 +1,18 @@
+
+.mainHomePage {
+  display: flex;
+  flex-direction: row;       
+  align-items: flex-start;
+  justify-content: center;
+  gap: 40px;
+  padding: 40px 60px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1024px) {
+  .mainHomePage {
+    flex-direction: column;
+    padding: 30px 20px;
+    gap: 32px;
+  }
+}

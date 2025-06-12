@@ -1,25 +1,19 @@
-import React from "react";
-import BlockTextLayout from "../components/layouts/blockTextLayout/BlockTextLayout";
 import HighlightedCode from "../components/highlightedCode/HighlightedCode";
 import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
 import FlyingIcons from "../components/flyingIcons/FlyingIcons";
-import ReviewsCode from "../components/reviewsBlock/ReviewsBlock";
-import { reviews } from "../data/reviewData";
+import HeroSection from "../components/heroSection/HeroSection";
+import styles from './homePage.module.css'
 
-const textMainPage = {
-  title: "Обучение frontend-разработке",
-  text: `Меня зовут Юрий, я занимаюсь фронтенд‑разработкой более 3 лет и преподаю индивидуально уже свыше 1 года и 8 месяцев. Помогаю ученикам с любым уровнем подготовки освоить HTML, CSS, JavaScript, React и создать реальные проекты с нуля. Даю полную поддержку на всех этапах обучения, включая подготовку к экзаменам, собеседованиям и работу с backend.`,
-};
 
 const HomePage = () => {
   return (
     <>
       <Header />
-      <main >
-        <BlockTextLayout layoutText={textMainPage} />
+      <main className={styles.mainHomePage}>
+        <HeroSection />
+        <HighlightedCode />
       </main>
-      <HighlightedCode />
       <FlyingIcons show={true} />
       <Footer />
     </>

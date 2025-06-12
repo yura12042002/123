@@ -38,7 +38,7 @@ const AuthForm = () => {
 
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/send-code",
+        "http://localhost:5000/api/login",
         formData
       );
 
@@ -58,7 +58,7 @@ const AuthForm = () => {
       interval = setInterval(async () => {
         try {
           const { data } = await axios.get(
-            `http://localhost:5000/api/status/${formData.telegram}`
+            `http://localhost:5000/api/api/status/${formData.telegram}`
           );
 
           if (data.status === "approved") {
