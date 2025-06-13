@@ -5,16 +5,16 @@ const {
   getStudentById,
   updateStudent,
   deleteStudent,
+  getMyProfile,
 } = require("../controllers/studentController");
 const validateStudent = require("../middlewares/validateStudent");
+const router = express.Router();
 const authMiddleware = require("../middlewares/authMiddleware");
 
-const router = express.Router();
-
-router.post("/", validateStudent, registerStudent); 
-router.get("/", getAllStudents);
-router.get("/:id", getStudentById);
-router.patch("/:id", validateStudent, updateStudent);
-router.delete("/:id", deleteStudent);
+router.get("/", authMiddleware, getAllStudents);
+router.get("/profile", authMiddleware, getMyProfile);
+router.get("/:id", authMiddleware, getStudentById);
+router.patch("/:id", authMiddleware, validateStudent, updateStudent);
+router.delete("/:id", authMiddleware, deleteStudent);
 
 module.exports = router;

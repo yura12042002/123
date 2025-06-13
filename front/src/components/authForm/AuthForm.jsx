@@ -38,7 +38,7 @@ const AuthForm = () => {
 
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/login",
+        "http://localhost:5000/api/send-code",
         formData
       );
 
@@ -58,23 +58,23 @@ const AuthForm = () => {
       interval = setInterval(async () => {
         try {
           const { data } = await axios.get(
-            `http://localhost:5000/api/api/status/${formData.telegram}`
+            `http://localhost:5000/api/status/${formData.telegram}`
           );
 
           if (data.status === "approved") {
             confetti({
               particleCount: 500,
-              spread: 360, 
-              startVelocity: 45, 
-              gravity: 0.6, 
-              decay: 0.88, 
-              scalar: 1.2, 
-              ticks: 800, 
+              spread: 360,
+              startVelocity: 45,
+              gravity: 0.6,
+              decay: 0.88,
+              scalar: 1.2,
+              ticks: 800,
               origin: {
                 x: 0.5,
-                y: 0.5, 
+                y: 0.5,
               },
-              zIndex: 9999, 
+              zIndex: 9999,
             });
             setStep("approved");
             clearInterval(interval);

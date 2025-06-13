@@ -16,18 +16,9 @@ const reasonsToVisit = [
 ];
 
 const HeroSection = () => {
-  const [showFunFact, setShowFunFact] = useState(false);
+  const [showFunFact, setShowFunFact] = useState(true);
   const [reasonIndex, setReasonIndex] = useState(0);
 
-  // Показать блок через 7 секунд
-  useEffect(() => {
-    const showTimer = setTimeout(() => {
-      setShowFunFact(true);
-    }, 7000);
-    return () => clearTimeout(showTimer);
-  }, []);
-
-  // Циклическая смена фактов (если showFunFact true)
   useEffect(() => {
     if (!showFunFact) return;
 
@@ -45,19 +36,19 @@ const HeroSection = () => {
           Привет! Я Юрий — наставник по фронтенду
         </h1>
         <p className={styles.description}>
-          Уже более 1 года и 8 месяцев я помогаю новичкам 
-          осваивать HTML, CSS, JavaScript и React. Вместе мы создаём
-          реальные проекты, решаем практические задачи и готовим портфолио.
+          Уже более 1 года и 8 месяцев я помогаю новичкам осваивать HTML, CSS,
+          JavaScript и React. Вместе мы создаём реальные проекты, решаем
+          практические задачи и готовим портфолио.
         </p>
         <div className={styles.buttons}>
           <Link to="/mentor" className={styles.primaryBtn}>
-            Индивидуальное наставничество
+            МЕНТОРСТВО
           </Link>
           <Link to="/finance" className={styles.secondaryBtn}>
-            Крипта и подписки
+            ОПТЛАТЫ И ПОДПИСКИ
           </Link>
           <Link to="/travel" className={styles.blueBtn}>
-            Прогулки на сапборде
+            ОФЛАЙН ТУРИЗМ
           </Link>
         </div>
       </div>

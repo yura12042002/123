@@ -139,6 +139,9 @@ const Header = () => {
     if (tab === "№ МЕНТОРСТВО") {
       navigate("/mentor");
     }
+    if (tab === "№ ПРОФИЛЬ") {
+      navigate("/profile");
+    }
   };
 
   return (

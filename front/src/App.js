@@ -6,6 +6,7 @@ import FinancePage from "./pages/FinancePage";
 import HomePage from "./pages/HomePage";
 import AuthPage from "./pages/AuthPage";
 import SignInForm from "./components/signInForm/SignInForm";
+import StudentProfilePage from "./pages/StudentProfilePage";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
          <Route path="/login" element={<SignInForm />} />
         <Route path="/finance" element={<FinancePage />} />
         <Route path="/auth" element={<AuthPage />} />
+        <Route path="/profile" element={<StudentProfilePage />} />
       </Routes>
     </BrowserRouter>
   );

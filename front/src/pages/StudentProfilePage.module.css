@@ -1,0 +1,283 @@
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #2c2c2c;
+  background: #fff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  border-radius: 16px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+
+.pageTitle {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 0.3rem;
+}
+
+.sessionTime {
+  font-size: 1rem;
+  color: #555;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+}
+
+.badge {
+  background-color: #d1fae5;
+  color: #065f46;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+}
+
+.profileSection {
+  display: grid;
+  grid-template-columns: 120px 1fr 200px;
+  gap: 1.5rem;
+  align-items: center;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-image: url("https://avatars.githubusercontent.com/u/9919?s=200&v=4");
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.name {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.progress {
+  text-align: left;
+}
+
+.progress h3 {
+  font-size: 1rem;
+  margin-bottom: 0.4rem;
+  color: #1f2937;
+}
+
+.progressBar {
+  width: 100%;
+  background-color: #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 12px;
+  margin-bottom: 0.5rem;
+}
+
+.progressFill {
+  background-color: #3b82f6;
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.resources {
+  margin-top: 2rem;
+}
+
+.resources h3 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: #111827;
+}
+
+.resourceList {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.resourceList li a {
+  display: block;
+  padding: 0.8rem 1.2rem;
+  background-color: #f3f4f6;
+  color: #1d4ed8;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 10px;
+  transition: all 0.2s ease-in-out;
+}
+
+.resourceList li a:hover {
+  background-color: #e0e7ff;
+  transform: scale(1.02);
+}
+
+.motivation {
+  margin: 2rem 0;
+  padding: 1rem;
+  background-color: #fff7ed;
+  border-left: 5px solid #f97316;
+  border-radius: 8px;
+  font-style: italic;
+  color: #92400e;
+}
+
+.footer {
+  text-align: center;
+  font-size: 0.9rem;
+  margin-top: 2rem;
+  color: #6b7280;
+}
+
+/* Loading */
+.loading {
+  text-align: center;
+  padding: 3rem 1rem;
+  font-size: 1.2rem;
+  color: #6b7280;
+}
+.logoutBtn,
+.backBtn {
+  background-color: #e5e7eb;
+  color: #1f2937;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-left: 0.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.logoutBtn:hover,
+.backBtn:hover {
+  background-color: #d1d5db;
+}
+
+.skills {
+  margin-bottom: 2rem;
+}
+
+.skills h3 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #1f2937;
+}
+
+.skillItem {
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.skillBar {
+  width: 100%;
+  height: 10px;
+  background-color: #e5e7eb;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 0.3rem;
+}
+
+.skillFill {
+  height: 100%;
+  background-color: #10b981;
+  transition: width 0.3s ease;
+}
+
+.lessons {
+  margin-bottom: 2rem;
+}
+
+.lessons h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.8rem;
+  color: #1f2937;
+}
+
+.lessons ul {
+  padding-left: 1rem;
+}
+
+.lessons li {
+  margin-bottom: 0.4rem;
+  list-style: disc;
+  color: #374151;
+}
+
+.nextTask {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: #eff6ff;
+  border-left: 5px solid #3b82f6;
+  border-radius: 8px;
+}
+
+.nextTask h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #1e3a8a;
+}
+
+.nextTask p {
+  margin: 0.3rem 0;
+  color: #1e40af;
+}
+
+/* Responsive for buttons */
+@media (max-width: 768px) {
+  .logoutBtn,
+  .backBtn {
+    width: 100%;
+    margin: 0.3rem 0 0.3rem 0;
+  }
+
+  .status {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  .profileSection {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .avatar {
+    margin: 0 auto;
+  }
+
+  .progress {
+    margin-top: 1rem;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

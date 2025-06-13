@@ -4,16 +4,17 @@ import styles from "./flyingIcons.module.css";
 
 const icons = [
   "/images/icons_for_background/354c0b686ae7d4325f6f972e96f8976c.svg",
-  "/images/icons_for_background/bug.svg",
   "/images/icons_for_background/CSS3-01.svg",
   "/images/icons_for_background/da1892c21c70e4a823e33a3e92d7c5ac.svg",
   "/images/icons_for_background/db1a9d939ba65c41ac11f786ca9adfca.svg",
   "/images/icons_for_background/figma-svgrepo-com.svg",
   "/images/icons_for_background/formik.svg",
   "/images/icons_for_background/HTML5-01.svg",
+  "/images/icons_for_background/node js.svg",
+
   "/images/icons_for_background/JAVASCRIPT Logo.svg",
   "/images/icons_for_background/node js logo.svg",
-  "/images/icons_for_background/node js.svg",
+  "/images/icons_for_background/bug.svg",
   "/images/icons_for_background/PostgreSQL-01.svg",
   "/images/icons_for_background/React-01.svg",
   "/images/icons_for_background/react-router-svgrepo-com.svg",
@@ -109,7 +110,7 @@ const FlyingIcons = ({ show }) => {
             el !== iconElement &&
             el.tagName !== "BODY" &&
             el.tagName !== "HTML" &&
-            !el.classList.contains(styles.container) 
+            !el.classList.contains(styles.container)
         );
 
         gsap.to(iconElement, {

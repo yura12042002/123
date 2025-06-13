@@ -22,10 +22,15 @@ const SignInForm = () => {
     e.preventDefault();
 
     try {
-      const { data } = await axios.post("http://localhost:5000/api/login", formData);
+      const { data } = await axios.post(
+        "http://localhost:5000/api/login",
+        formData
+      );
 
       if (data.success) {
-        navigate("/preview"); // Или другая страница после входа
+        localStorage.setItem("token", data.token); // <== сохранить токен
+        localStorage.setItem("student", JSON.stringify(data.student)); // <== сохранить профиль
+        navigate("/profile");
       } else {
         setError(data.error || "Ошибка входа");
       }
@@ -33,7 +38,7 @@ const SignInForm = () => {
       setError(err.response?.data?.error || "Сервер не отвечает");
     }
   };
-
+  
   return (
     <div className={styles.fullPageWrapper}>
       <CodeBackground />

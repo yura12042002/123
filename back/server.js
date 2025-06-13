@@ -10,6 +10,8 @@ const mainPromt = require("./generalPromt");
 const errorHandler = require("./middlewares/errorHandler");
 const studentRoutes = require("./routes/studentRoutes");
 const Student = require("./models/Student");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const cors = require("cors");
 
@@ -31,14 +33,13 @@ const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-// const bot = new TelegramBot(process.env.BOT_TOKEN_TURISM, { polling: true });
+const bot = new TelegramBot(process.env.BOT_TOKEN_TURISM, { polling: true });
 const botAuth = new TelegramBot(process.env.BOT_TOKEN_AUTHORIZE, {
   polling: true,
 });
 
 const adminId = process.env.ADMIN_TELEGRAM_ID;
 
-// 👇 ДОБАВЬ в server.js
 app.post("/api/login", async (req, res) => {
   const { telegram, password } = req.body;
 
@@ -53,11 +54,28 @@ app.post("/api/login", async (req, res) => {
       return res.status(404).json({ error: "Пользователь не найден" });
     }
 
-    if (student.password !== password) {
+    const isMatch = await bcrypt.compare(password, student.password);
+    if (!isMatch) {
       return res.status(401).json({ error: "Неверный пароль" });
     }
 
-    return res.json({ success: true, student }); // можно выдать токен позже
+    const token = jwt.sign(
+      { id: student._id, telegram: student.telegram },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    res.json({
+      success: true,
+      token,
+      student: {
+        id: student._id,
+        firstName: student.firstName,
+        lastName: student.lastName,
+        telegram: student.telegram,
+        email: student.email,
+      },
+    });
   } catch (err) {
     return res.status(500).json({ error: "Ошибка сервера" });
   }
@@ -148,7 +166,11 @@ botAuth.on("callback_query", async (query) => {
           return;
         }
 
-        const student = new Student(studentData);
+        const hashedPassword = await bcrypt.hash(studentData.password, 10);
+        const student = new Student({
+          ...studentData,
+          password: hashedPassword,
+        });
         await student.save();
 
         await botAuth.editMessageText(
@@ -181,123 +203,123 @@ botAuth.on("callback_query", async (query) => {
   }
 });
 
-// bot.onText(/\/echo (.+)/, (msg, match) => {
-//   const chatId = msg.chat.id;
-//   const resp = match[1];
+bot.onText(/\/echo (.+)/, (msg, match) => {
+  const chatId = msg.chat.id;
+  const resp = match[1];
 
-//   bot.sendMessage(chatId, resp);
-// });
+  bot.sendMessage(chatId, resp);
+});
 
-// bot.on("message", async (msg) => {
-//   const chatId = msg.chat.id;
-//   const text = msg.text;
+bot.on("message", async (msg) => {
+  const chatId = msg.chat.id;
+  const text = msg.text;
 
-//   await saveMessage(chatId, text, "user");
+  await saveMessage(chatId, text, "user");
 
-//   const context = await getMessagesByTelegramId(chatId);
+  const context = await getMessagesByTelegramId(chatId);
 
-//   const completion = await client.chat.completions.create({
-//     messages: [
-//       {
-//         role: "developer",
-//         content: mainPromt,
-//       },
-//       ...context.slice(-20),
-//       {
-//         role: "developer",
-//         content: `!!! Пиши ответы в json формате  это очень важно : 
-// {
-//         "textContent": "твое сообщение",
-//         "buttons": [] // массив строк с кнопками на которые может нажать пользователь пиши их отталкиваясь от контекста сообщений 
-// }
-// !!! предлагай варианты ответа только те, на которые ты знаешь ответ из текста, если понимаешь что клиент готов забронироватьв сообщении отдельно укажи способ связи со мной, ссылка на мой тг - @yurasokol, также добавляй прикольные смайлики к кнопкам выше это очень важно `,
-//       },
-//     ],
-//     model: "gpt-4.1",
-//     store: true,
-//   });
+  const completion = await client.chat.completions.create({
+    messages: [
+      {
+        role: "developer",
+        content: mainPromt,
+      },
+      ...context.slice(-20),
+      {
+        role: "developer",
+        content: `!!! Пиши ответы в json формате  это очень важно :
+{
+        "textContent": "твое сообщение",
+        "buttons": [] // массив строк с кнопками на которые может нажать пользователь пиши их отталкиваясь от контекста сообщений
+}
+!!! предлагай варианты ответа только те, на которые ты знаешь ответ из текста, если понимаешь что клиент готов забронироватьв сообщении отдельно укажи способ связи со мной, ссылка на мой тг - @yurasokol, также добавляй прикольные смайлики к кнопкам выше это очень важно `,
+      },
+    ],
+    model: "gpt-4.1",
+    store: true,
+  });
 
-//   const parseJSON = JSON.parse(completion.choices[0].message.content);
+  const parseJSON = JSON.parse(completion.choices[0].message.content);
 
-//   if (parseJSON.buttons) {
-//     await saveMessage(
-//       chatId,
-//       completion.choices[0].message.content,
-//       "assistant"
-//     );
+  if (parseJSON.buttons) {
+    await saveMessage(
+      chatId,
+      completion.choices[0].message.content,
+      "assistant"
+    );
 
-//     const inlineKeyboard = parseJSON.buttons.map((btn) => [
-//       {
-//         text: btn,
-//         callback_data: btn.toLowerCase().replace(/\s+/g, "_").slice(0, 64),
-//       },
-//     ]);
+    const inlineKeyboard = parseJSON.buttons.map((btn) => [
+      {
+        text: btn,
+        callback_data: btn.toLowerCase().replace(/\s+/g, "_").slice(0, 64),
+      },
+    ]);
 
-//     // виспер для преобразования голоса в текст
+    // виспер для преобразования голоса в текст
 
-//     bot.sendMessage(chatId, parseJSON.textContent, {
-//       reply_markup: {
-//         inline_keyboard: inlineKeyboard,
-//       },
-//     });
-//   } else {
-//     await saveMessage(
-//       chatId,
-//       completion.choices[0].message.content,
-//       "assistant"
-//     );
-//   }
-// });
+    bot.sendMessage(chatId, parseJSON.textContent, {
+      reply_markup: {
+        inline_keyboard: inlineKeyboard,
+      },
+    });
+  } else {
+    await saveMessage(
+      chatId,
+      completion.choices[0].message.content,
+      "assistant"
+    );
+  }
+});
 
-// bot.on("callback_query", async (query) => {
-//   const chatId = query.message.chat.id;
-//   const data = query.data;
+bot.on("callback_query", async (query) => {
+  const chatId = query.message.chat.id;
+  const data = query.data;
 
-//   await saveMessage(chatId, data, "user");
+  await saveMessage(chatId, data, "user");
 
-//   const context = await getMessagesByTelegramId(chatId);
-//   const completion = await client.chat.completions.create({
-//     messages: [
-//       {
-//         role: "developer",
-//         content: mainPromt,
-//       },
-//       ...context.slice(-20),
-//       {
-//         role: "developer",
-//         content: `!!! Пиши ответы в json формате  это очень важно : 
-// {
-//         "textContent": "твое сообщение",
-//         "buttons": [] // массив строк с кнопками на которые может нажать пользователь пиши их отталкиваясь от контекста сообщений 
-// }
-// !!! предлагай варианты ответа только те, на которые ты знаешь ответ из текста выше это очень важно `,
-//       },
-//     ],
-//     model: "gpt-4.1",
-//   });
+  const context = await getMessagesByTelegramId(chatId);
+  const completion = await client.chat.completions.create({
+    messages: [
+      {
+        role: "developer",
+        content: mainPromt,
+      },
+      ...context.slice(-20),
+      {
+        role: "developer",
+        content: `!!! Пиши ответы в json формате  это очень важно :
+{
+        "textContent": "твое сообщение",
+        "buttons": [] // массив строк с кнопками на которые может нажать пользователь пиши их отталкиваясь от контекста сообщений
+}
+!!! предлагай варианты ответа только те, на которые ты знаешь ответ из текста выше это очень важно `,
+      },
+    ],
+    model: "gpt-4.1",
+  });
 
-//   console.log(completion.choices[0].message.content);
+  console.log(completion.choices[0].message.content);
 
-//   const parsed = JSON.parse(completion.choices[0].message.content);
-//   const buttons = Array.isArray(parsed.buttons) ? parsed.buttons : [];
+  const parsed = JSON.parse(completion.choices[0].message.content);
+  const buttons = Array.isArray(parsed.buttons) ? parsed.buttons : [];
 
-//   const inlineKeyboard = buttons.map((btn) => [
-//     {
-//       text: btn,
-//       callback_data: btn.toLowerCase().replace(/\s+/g, "_").slice(0, 64),
-//     },
-//   ]);
+  const inlineKeyboard = buttons.map((btn) => [
+    {
+      text: btn,
+      callback_data: btn.toLowerCase().replace(/\s+/g, "_").slice(0, 64),
+    },
+  ]);
 
-//   await saveMessage(chatId, parsed.textContent, "assistant");
+  await saveMessage(chatId, parsed.textContent, "assistant");
 
-//   bot.sendMessage(chatId, parsed.textContent, {
-//     reply_markup: {
-//       inline_keyboard: inlineKeyboard,
-//     },
-//   });
+  bot.sendMessage(chatId, parsed.textContent, {
+    reply_markup: {
+      inline_keyboard: inlineKeyboard,
+    },
+  });
 
-//   bot.answerCallbackQuery(query.id);
-// });
+  bot.answerCallbackQuery(query.id);
+});
 
 const PORT = process.env.PORT || 5000;
 
