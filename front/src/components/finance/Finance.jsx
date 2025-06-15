@@ -12,7 +12,7 @@ const Finance = () => {
       <section className={styles.hero}>
         <OneMoreTextTitle
           codeTitleBase={
-            "let мне = помочь тебе безопасно и быстро провести платеж"
+            "let мне = помочь тебе безопасно провести платеж"
           }
         />
       </section>
