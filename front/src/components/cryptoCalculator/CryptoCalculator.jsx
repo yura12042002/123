@@ -13,7 +13,7 @@ const CRYPTO_LIST = [
 
 const CryptoCalculator = () => {
   const [rates, setRates] = useState({});
-  const [selected, setSelected] = useState(CRYPTO_LIST[0]);
+  const [selected, setSelected] = useState(CRYPTO_LIST[3]);
   const [amount, setAmount] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mode, setMode] = useState("buy"); // buy (пользователь покупает у тебя), sell (пользователь продаёт тебе)
