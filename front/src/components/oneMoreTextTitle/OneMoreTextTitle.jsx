@@ -60,6 +60,7 @@ const OneMoreTextTitle = ({ codeTitleBase }) => {
         margin: "0 auto",
         overflowWrap: "break-word",
         marginBottom: "30px",
+        marginTop: "50px"
       }}
     >
       {renderedTitle || "// Загружается..."}

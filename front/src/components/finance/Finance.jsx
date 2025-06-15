@@ -3,6 +3,8 @@ import styles from "./finance.module.css";
 import OneMoreTextTitle from "../oneMoreTextTitle/OneMoreTextTitle";
 import Steps from "../steps/Steps";
 import HelpBlock from "../helpBlock/HelpBlock";
+import CryptoCalculator from "../cryptoCalculator/CryptoCalculator";
+
 const Finance = () => {
   return (
     <main className={styles.page}>
@@ -16,7 +18,13 @@ const Finance = () => {
       </section>
 
       <HelpBlock />
-      
+
+      <section className={styles.calculator}>
+        <OneMoreTextTitle
+          codeTitleBase={"LET МНЕ = ПОКАЗАТЬ СКОЛЬКО ТЫ ПОЛУЧИШЬ"}
+        />
+        <CryptoCalculator />
+      </section>
 
       {/* Benefits */}
       <section className={styles.benefits}>
@@ -41,7 +49,10 @@ const Finance = () => {
             <p>История успешных переводов Грузия</p>
           </div>
           <div className={styles.cardScreen}>
-            <img src="/images/money/ziratTranz.jpg" alt="История транзакций Турция" />
+            <img
+              src="/images/money/ziratTranz.jpg"
+              alt="История транзакций Турция"
+            />
             <p>История успешных переводов Турция</p>
           </div>
           <div className={styles.cardScreen}>
@@ -49,7 +60,6 @@ const Finance = () => {
             <p>История успешных переводов Korona</p>
           </div>
         </div>
-        
       </section>
 
       {/* Steps */}
