@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const studentSchema = new mongoose.Schema({
   telegram: { type: String, required: true, unique: true },
+  chatId: { type: String },
   firstName: String,
   lastName: String,
   age: Number,
