@@ -1,3 +1,4 @@
+/* Обычный стиль для мобилок (как сейчас) */
 .card {
   background: #ffffff;
   border-radius: 20px;
@@ -8,6 +9,19 @@
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   color: #111;
   transition: transform 0.3s ease;
+}
+
+/* 🖥️ Десктоп: фиксируем калькулятор внизу справа */
+@media (min-width: 768px) {
+  .card {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    margin: 0;
+    z-index: 999;
+    max-width: 360px;
+    width: calc(100% - 48px);
+  }
 }
 
 .card:hover {

@@ -323,3 +323,13 @@
     font-size: 24px;
   }
 }
+
+.onlyMobile {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .onlyMobile {
+    display: none;
+  }
+}

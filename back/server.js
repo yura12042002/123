@@ -33,7 +33,7 @@ const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-const bot = new TelegramBot(process.env.BOT_TOKEN_TURISM, { polling: true });
+// const bot = new TelegramBot(process.env.BOT_TOKEN_TURISM, { polling: true });
 const botAuth = new TelegramBot(process.env.BOT_TOKEN_AUTHORIZE, {
   polling: true,
 });
@@ -203,123 +203,203 @@ botAuth.on("callback_query", async (query) => {
   }
 });
 
-bot.onText(/\/echo (.+)/, (msg, match) => {
-  const chatId = msg.chat.id;
-  const resp = match[1];
+// bot.onText(/\/echo (.+)/, (msg, match) => {
+//   const chatId = msg.chat.id;
+//   const resp = match[1];
 
-  bot.sendMessage(chatId, resp);
-});
+//   bot.sendMessage(chatId, resp);
+// });
 
-bot.on("message", async (msg) => {
-  const chatId = msg.chat.id;
-  const text = msg.text;
+// bot.on("message", async (msg) => {
+//   const chatId = msg.chat.id;
+//   const text = msg.text;
 
-  await saveMessage(chatId, text, "user");
+//   await saveMessage(chatId, text, "user");
 
-  const context = await getMessagesByTelegramId(chatId);
+//   const context = await getMessagesByTelegramId(chatId);
 
-  const completion = await client.chat.completions.create({
-    messages: [
-      {
-        role: "developer",
-        content: mainPromt,
-      },
-      ...context.slice(-20),
-      {
-        role: "developer",
-        content: `!!! Пиши ответы в json формате  это очень важно :
-{
-        "textContent": "твое сообщение",
-        "buttons": [] // массив строк с кнопками на которые может нажать пользователь пиши их отталкиваясь от контекста сообщений
-}
-!!! предлагай варианты ответа только те, на которые ты знаешь ответ из текста, если понимаешь что клиент готов забронироватьв сообщении отдельно укажи способ связи со мной, ссылка на мой тг - @yurasokol, также добавляй прикольные смайлики к кнопкам выше это очень важно `,
-      },
-    ],
-    model: "gpt-4.1",
-    store: true,
+//   const completion = await client.chat.completions.create({
+//     messages: [
+//       {
+//         role: "developer",
+//         content: mainPromt,
+//       },
+//       ...context.slice(-20),
+//       {
+//         role: "developer",
+//         content: `!!! Пиши ответы в json формате  это очень важно :
+// {
+//         "textContent": "твое сообщение",
+//         "buttons": [] // массив строк с кнопками на которые может нажать пользователь пиши их отталкиваясь от контекста сообщений
+// }
+// !!! предлагай варианты ответа только те, на которые ты знаешь ответ из текста, если понимаешь что клиент готов забронироватьв сообщении отдельно укажи способ связи со мной, ссылка на мой тг - @yurasokol, также добавляй прикольные смайлики к кнопкам выше это очень важно `,
+//       },
+//     ],
+//     model: "gpt-4.1",
+//     store: true,
+//   });
+
+//   const parseJSON = JSON.parse(completion.choices[0].message.content);
+
+//   if (parseJSON.buttons) {
+//     await saveMessage(
+//       chatId,
+//       completion.choices[0].message.content,
+//       "assistant"
+//     );
+
+//     const inlineKeyboard = parseJSON.buttons.map((btn) => [
+//       {
+//         text: btn,
+//         callback_data: btn.toLowerCase().replace(/\s+/g, "_").slice(0, 64),
+//       },
+//     ]);
+
+//     // виспер для преобразования голоса в текст
+
+//     bot.sendMessage(chatId, parseJSON.textContent, {
+//       reply_markup: {
+//         inline_keyboard: inlineKeyboard,
+//       },
+//     });
+//   } else {
+//     await saveMessage(
+//       chatId,
+//       completion.choices[0].message.content,
+//       "assistant"
+//     );
+//   }
+// });
+
+// bot.on("callback_query", async (query) => {
+//   const chatId = query.message.chat.id;
+//   const data = query.data;
+
+//   await saveMessage(chatId, data, "user");
+
+//   const context = await getMessagesByTelegramId(chatId);
+//   const completion = await client.chat.completions.create({
+//     messages: [
+//       {
+//         role: "developer",
+//         content: mainPromt,
+//       },
+//       ...context.slice(-20),
+//       {
+//         role: "developer",
+//         content: `!!! Пиши ответы в json формате  это очень важно :
+// {
+//         "textContent": "твое сообщение",
+//         "buttons": [] // массив строк с кнопками на которые может нажать пользователь пиши их отталкиваясь от контекста сообщений
+// }
+// !!! предлагай варианты ответа только те, на которые ты знаешь ответ из текста выше это очень важно `,
+//       },
+//     ],
+//     model: "gpt-4.1",
+//   });
+
+//   console.log(completion.choices[0].message.content);
+
+//   const parsed = JSON.parse(completion.choices[0].message.content);
+//   const buttons = Array.isArray(parsed.buttons) ? parsed.buttons : [];
+
+//   const inlineKeyboard = buttons.map((btn) => [
+//     {
+//       text: btn,
+//       callback_data: btn.toLowerCase().replace(/\s+/g, "_").slice(0, 64),
+//     },
+//   ]);
+
+//   await saveMessage(chatId, parsed.textContent, "assistant");
+
+//   bot.sendMessage(chatId, parsed.textContent, {
+//     reply_markup: {
+//       inline_keyboard: inlineKeyboard,
+//     },
+//   });
+
+//   bot.answerCallbackQuery(query.id);
+// });
+
+const pendingResets = new Map(); // email => статус
+
+app.post("/api/request-password-reset", async (req, res) => {
+  const { telegram } = req.body;
+
+  if (!telegram) return res.status(400).json({ error: "Telegram обязателен" });
+
+  const student = await Student.findOne({ telegram }); // ✅ Ищем по telegram
+  if (!student)
+    return res.status(404).json({ error: "Пользователь не найден" });
+
+  const resetId = Date.now().toString();
+  pendingResets.set(resetId, { telegram, approved: false });
+
+  const message = `🔁 Запрос на восстановление пароля:
+📨 Telegram: ${telegram}`;
+
+  botAuth.sendMessage(adminId, message, {
+    reply_markup: {
+      inline_keyboard: [
+        [{ text: "✅ Одобрить", callback_data: `reset_approve_${resetId}` }],
+      ],
+    },
   });
 
-  const parseJSON = JSON.parse(completion.choices[0].message.content);
+  res.json({ success: true });
+});
 
-  if (parseJSON.buttons) {
-    await saveMessage(
-      chatId,
-      completion.choices[0].message.content,
-      "assistant"
-    );
+botAuth.on("callback_query", async (query) => {
+  const data = query.data;
 
-    const inlineKeyboard = parseJSON.buttons.map((btn) => [
-      {
-        text: btn,
-        callback_data: btn.toLowerCase().replace(/\s+/g, "_").slice(0, 64),
-      },
-    ]);
+  if (data.startsWith("reset_approve_")) {
+    const resetId = data.replace("reset_approve_", "");
+    const request = pendingResets.get(resetId);
 
-    // виспер для преобразования голоса в текст
+    if (!request) {
+      return botAuth.answerCallbackQuery(query.id, {
+        text: "Запрос не найден",
+        show_alert: true,
+      });
+    }
 
-    bot.sendMessage(chatId, parseJSON.textContent, {
-      reply_markup: {
-        inline_keyboard: inlineKeyboard,
-      },
+    request.approved = true;
+    pendingResets.set(resetId, request);
+
+    botAuth.editMessageText("✅ Пользователю разрешено сменить пароль", {
+      chat_id: query.message.chat.id,
+      message_id: query.message.message_id,
     });
-  } else {
-    await saveMessage(
-      chatId,
-      completion.choices[0].message.content,
-      "assistant"
-    );
+
+    return botAuth.answerCallbackQuery(query.id);
   }
 });
 
-bot.on("callback_query", async (query) => {
-  const chatId = query.message.chat.id;
-  const data = query.data;
-
-  await saveMessage(chatId, data, "user");
-
-  const context = await getMessagesByTelegramId(chatId);
-  const completion = await client.chat.completions.create({
-    messages: [
-      {
-        role: "developer",
-        content: mainPromt,
-      },
-      ...context.slice(-20),
-      {
-        role: "developer",
-        content: `!!! Пиши ответы в json формате  это очень важно :
-{
-        "textContent": "твое сообщение",
-        "buttons": [] // массив строк с кнопками на которые может нажать пользователь пиши их отталкиваясь от контекста сообщений
-}
-!!! предлагай варианты ответа только те, на которые ты знаешь ответ из текста выше это очень важно `,
-      },
-    ],
-    model: "gpt-4.1",
-  });
-
-  console.log(completion.choices[0].message.content);
-
-  const parsed = JSON.parse(completion.choices[0].message.content);
-  const buttons = Array.isArray(parsed.buttons) ? parsed.buttons : [];
-
-  const inlineKeyboard = buttons.map((btn) => [
-    {
-      text: btn,
-      callback_data: btn.toLowerCase().replace(/\s+/g, "_").slice(0, 64),
-    },
-  ]);
-
-  await saveMessage(chatId, parsed.textContent, "assistant");
-
-  bot.sendMessage(chatId, parsed.textContent, {
-    reply_markup: {
-      inline_keyboard: inlineKeyboard,
-    },
-  });
-
-  bot.answerCallbackQuery(query.id);
+app.get("/api/check-reset-status/:telegram", (req, res) => {
+  const telegram = req.params.telegram;
+  const entry = [...pendingResets.values()].find((r) => r.telegram === telegram);
+  if (!entry) return res.json({ status: "pending" });
+  return res.json({ status: entry.approved ? "approved" : "pending" });
 });
+
+
+app.post("/api/confirm-new-password", async (req, res) => {
+  const { telegram, newPassword } = req.body;
+
+  const student = await Student.findOne({ telegram });
+  if (!student) return res.status(404).json({ error: "Пользователь не найден" });
+
+  const hashed = await bcrypt.hash(newPassword, 10);
+  student.password = hashed;
+  await student.save();
+
+  for (const [key, val] of pendingResets.entries()) {
+    if (val.telegram === telegram) pendingResets.delete(key);
+  }
+
+  res.json({ success: true });
+});
+
 
 const PORT = process.env.PORT || 5000;
 

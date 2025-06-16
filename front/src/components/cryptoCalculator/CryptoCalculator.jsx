@@ -14,10 +14,11 @@ const CRYPTO_LIST = [
 const CryptoCalculator = () => {
   const [rates, setRates] = useState({});
   const [selected, setSelected] = useState(CRYPTO_LIST[3]);
-  const [amount, setAmount] = useState("");
+  const [cryptoAmount, setCryptoAmount] = useState("");
+  const [rubAmount, setRubAmount] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [mode, setMode] = useState("buy"); // buy (пользователь покупает у тебя), sell (пользователь продаёт тебе)
-  const [result, setResult] = useState({ total: 0, rate: 0 });
+  const [mode, setMode] = useState("buy");
+  const [rate, setRate] = useState(0);
 
   useEffect(() => {
     fetch(
@@ -29,14 +30,35 @@ const CryptoCalculator = () => {
 
   useEffect(() => {
     if (!rates[selected.id]) return;
-
     const baseRate = rates[selected.id].rub;
-    const qty = parseFloat(amount) || 1;
-    const finalRate = mode === "sell" ? baseRate * 0.8 : baseRate * 1.2; // ✅ теперь логика верная
-    const total = qty * finalRate;
+    const adjustedRate = mode === "sell" ? baseRate * 0.9 : baseRate * 1.1;
 
-    setResult({ total: total.toFixed(2), rate: finalRate.toFixed(2) });
-  }, [amount, selected, rates, mode]);
+    setRate(adjustedRate);
+  }, [selected, rates, mode]);
+
+  const handleCryptoChange = (e) => {
+    const value = e.target.value;
+    if (parseFloat(value) < 0) return; // ❌ блокируем отрицательное
+    setCryptoAmount(value);
+    const val = parseFloat(value);
+    if (!isNaN(val)) {
+      setRubAmount((val * rate).toFixed(2));
+    } else {
+      setRubAmount("");
+    }
+  };
+
+  const handleRubChange = (e) => {
+    const value = e.target.value;
+    if (parseFloat(value) < 0) return; // ❌ блокируем отрицательное
+    setRubAmount(value);
+    const val = parseFloat(value);
+    if (!isNaN(val)) {
+      setCryptoAmount((val / rate).toFixed(6));
+    } else {
+      setCryptoAmount("");
+    }
+  };
 
   const handleSelect = (coin) => {
     setSelected(coin);
@@ -83,23 +105,33 @@ const CryptoCalculator = () => {
         )}
       </div>
 
-      {rates[selected.id]?.rub && (
+      {rate && (
         <p className={styles.rate}>
           {mode === "buy" ? "Курс продажи:" : "Курс покупки:"}{" "}
-          <strong>{parseFloat(result.rate).toLocaleString()} ₽</strong>
+          <strong>{parseFloat(rate).toLocaleString()} ₽</strong>
         </p>
       )}
 
       <input
         type="number"
-        placeholder="Введите количество"
+        min="0"
+        placeholder={`Введите сумму в ${selected.name}`}
         className={styles.input}
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
+        value={cryptoAmount}
+        onChange={handleCryptoChange}
+      />
+
+      <input
+        type="number"
+        min="0"
+        placeholder="Или введите сумму в ₽"
+        className={styles.input}
+        value={rubAmount}
+        onChange={handleRubChange}
       />
 
       <p className={styles.total}>
-        💰 Итог: <strong>{result.total} ₽</strong>
+        💰 Итог: <strong>{rubAmount || 0} ₽</strong>
       </p>
     </div>
   );

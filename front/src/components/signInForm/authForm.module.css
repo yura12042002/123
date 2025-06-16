@@ -110,3 +110,41 @@
     padding: 10px 14px;
   }
 }
+
+
+.forgotText {
+  margin-top: 10px;
+  cursor: pointer;
+  color: #007bff;
+  text-decoration: underline;
+  text-align: right;
+}
+
+.backText {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 14px;
+  cursor: pointer;
+  color: #666;
+  text-decoration: underline;
+}
+
+.loaderBlock {
+  text-align: center;
+  padding: 20px;
+}
+
+.loader {
+  margin: 20px auto;
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #007bff;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

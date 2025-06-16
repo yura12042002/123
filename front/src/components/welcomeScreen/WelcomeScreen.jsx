@@ -33,7 +33,7 @@ const WelcomeScreen = ({ onEnter }) => {
         setIsDestroyed(true);
       },
     });
-    navigate("/")
+    navigate("/profile")
   };
 
   return (

@@ -38,6 +38,7 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
+  const [student, setStudent] = useState(null);
 
   const toggleMenu = () => {
     setIsOpen((prev) => !prev);
@@ -127,23 +128,32 @@ const Header = () => {
   };
 
   const handleTabClick = (tab) => {
-    if (tab === "№ ТУРИЗМ") {
-      navigate("/travel");
-    }
-    if (tab === "№ ФИНАНСЫ") {
-      navigate("/finance");
-    }
-    if (tab === "№ ГЛАВНАЯ") {
-      navigate("/");
-    }
-    if (tab === "№ МЕНТОРСТВО") {
-      navigate("/mentor");
-    }
     if (tab === "№ ПРОФИЛЬ") {
-      navigate("/profile");
+      if (!student) {
+        navigate("/auth");
+      } else {
+        navigate("/profile");
+      }
+      return;
     }
+    if (tab === "№ ТУРИЗМ") navigate("/travel");
+    if (tab === "№ ФИНАНСЫ") navigate("/finance");
+    if (tab === "№ ГЛАВНАЯ") navigate("/");
+    if (tab === "№ МЕНТОРСТВО") navigate("/mentor");
   };
 
+  useEffect(() => {
+    const storedStudent = localStorage.getItem("student");
+    if (storedStudent) {
+      try {
+        setStudent(JSON.parse(storedStudent));
+      } catch (e) {
+        console.error("Ошибка при парсинге профиля:", e);
+        setStudent(null);
+      }
+    }
+  }, []);
+  console.log(student)
   return (
     <header className={style.header}>
       <div className={style.headerContent}>
@@ -174,13 +184,20 @@ const Header = () => {
             exit="exit"
           >
             <div className={style.topButtons}>
-              <button
-                className={style.headerBtn}
-                onClick={() => handleClickSignIn()}
-              >
-                Вход / Регистрация
-              </button>
+              {student ? (
+                <button
+                  className={style.headerBtn}
+                  onClick={() => navigate("/profile")}
+                >
+                  👤 {student.telegram || "Профиль"}
+                </button>
+              ) : (
+                <button className={style.headerBtn} onClick={handleClickSignIn}>
+                  Вход / Регистрация
+                </button>
+              )}
             </div>
+
             <nav className={style.tabMenu}>
               {tabs.map((tab, index) => (
                 <motion.div

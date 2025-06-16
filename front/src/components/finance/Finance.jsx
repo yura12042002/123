@@ -11,18 +11,17 @@ const Finance = () => {
       {/* Hero */}
       <section className={styles.hero}>
         <OneMoreTextTitle
-          codeTitleBase={
-            "let мне = помочь тебе безопасно провести платеж"
-          }
+          codeTitleBase={"let мне = помочь тебе безопасно провести платеж"}
         />
       </section>
 
       <HelpBlock />
-
       <section className={styles.calculator}>
-        <OneMoreTextTitle
-          codeTitleBase={"LET МНЕ = ПОКАЗАТЬ СКОЛЬКО ТЫ ПОЛУЧИШЬ"}
-        />
+        <div className={styles.onlyMobile}>
+          <OneMoreTextTitle
+            codeTitleBase={"LET МНЕ = ПОКАЗАТЬ СКОЛЬКО ТЫ ПОЛУЧИШЬ"}
+          />
+        </div>
         <CryptoCalculator />
       </section>
 

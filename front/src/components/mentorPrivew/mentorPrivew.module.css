@@ -1,128 +1,215 @@
 .container {
-    text-align: center;
-    font-family: "Courier New", Courier, monospace;
-    padding: 20px;
+  text-align: center;
+  font-family: "Courier New", Courier, monospace;
+  padding: 20px;
 }
 
 .containerPrev {
-    display: flex;
+  display: flex;
 }
 
 .title {
-    margin-bottom: 50px;
+  margin-bottom: 50px;
 }
 
 .textBlock {
-    padding: 15px;
-    border: 2px solid black;
-    border-radius: 10px;
-    background-color: white;
-    box-shadow: 5px 5px 0px black;
-    font-size: 14px;
-    text-align: left;
-    position: relative;
-    transition: all 0.3s ease-in-out;
+  padding: 15px;
+  border: 2px solid black;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 5px 5px 0px black;
+  font-size: 14px;
+  text-align: left;
+  position: relative;
+  transition: all 0.3s ease-in-out;
 }
 
 .textBlock:hover {
-    transform: scale(1.05);
-    box-shadow: 8px 8px 0px black;
+  transform: scale(1.05);
+  box-shadow: 8px 8px 0px black;
 }
 
 .textBlock::after {
-    content: "✖";
-    position: absolute;
-    top: 5px;
-    right: 10px;
-    font-size: 14px;
-    cursor: pointer;
-    color: red;
-    transition: color 0.3s;
+  content: "✖";
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  color: red;
+  transition: color 0.3s;
 }
 
 .textBlock:hover::after {
-    color: darkred;
+  color: darkred;
 }
 
 .videoWrapper {
-    width: 800px;
-    background-color: black;
-    border: 2px solid black;
-    border-radius: 12px;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
-    overflow: hidden;
+  width: 800px;
+  background-color: black;
+  border: 2px solid black;
+  border-radius: 12px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
 }
 
 .learnMoreBtn {
-    display: block;
-    margin: 20px auto;
-    padding: 12px 24px;
-    border: 2px solid black;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: bold;
-    background-color: white;
-    box-shadow: 3px 3px 10px rgba(138, 43, 226, 0.5);
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+  display: block;
+  margin: 20px auto;
+  padding: 12px 24px;
+  border: 2px solid black;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: white;
+  box-shadow: 3px 3px 10px rgba(138, 43, 226, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .learnMoreBtn:hover {
-    background-color: black;
-    color: white;
-    box-shadow: 0px 0px 15px rgba(138, 43, 226, 0.8);
-    transform: scale(1.1);
+  background-color: black;
+  color: white;
+  box-shadow: 0px 0px 15px rgba(138, 43, 226, 0.8);
+  transform: scale(1.1);
 }
 
 .centerBlock {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .rowTexts {
-    display: flex;
+  display: flex;
 }
 
-
 @media (max-width: 1280px) {
-    
-    .textBlock {
-        max-width: 350px;
-    }
-    .containerPrev {
-        flex-direction: column-reverse;
-        align-items: center;
-    }
+  .textBlock {
+    max-width: 350px;
+  }
+  .containerPrev {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
 
-    .videoWrapper {
-        width: 80%;
+  .videoWrapper {
+    width: 80%;
+  }
 
-    }
-
-    .rowTexts {
-        flex-direction: column;
-        align-items: center;
-    }
+  .rowTexts {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 @media (max-width: 480px) {
-    .title {
-        margin-bottom: 20px;
-    }
-    .videoWrapper {
-        width: 100%;
-        max-width: 320px;
-    }
+  .title {
+    margin-bottom: 20px;
+  }
+  .videoWrapper {
+    width: 100%;
+    max-width: 320px;
+  }
 
-    .learnMoreBtn {
-        font-size: 14px;
-        padding: 10px 20px;
-    }
+  .learnMoreBtn {
+    font-size: 14px;
+    padding: 10px 20px;
+  }
 
-    .textBlock {
-        max-width: 100%;
-    }
+  .textBlock {
+    max-width: 100%;
+  }
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.65);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modalContent {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 600px;
+  width: 100%;
+  text-align: left;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.featuresList {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  font-size: 18px;
+}
+
+.featuresList li {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.closeButton {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  background-color: #8a2be2;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.2s ease;
+}
+
+.closeButton:hover {
+  background-color: #7b1fa2;
+}
+.featuresList li svg {
+  font-size: 24px;
+}
+
+@media (max-width: 768px) {
+  .modalContent {
+    padding: 20px;
+    font-size: 16px;
+  }
+
+  .featuresList li {
+    font-size: 16px;
+  }
+
+  .featuresList li svg {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modalContent {
+    padding: 15px;
+  }
+
+  .featuresList {
+    font-size: 14px;
+  }
+
+  .featuresList li {
+    gap: 8px;
+  }
+
+  .featuresList li svg {
+    font-size: 18px;
+  }
 }
