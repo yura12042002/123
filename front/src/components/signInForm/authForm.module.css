@@ -144,6 +144,17 @@
   animation: spin 1s linear infinite;
 }
 
+.altBtn {
+  margin-top: 10px;
+  background: #e0e0e0;
+  color: #333;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }

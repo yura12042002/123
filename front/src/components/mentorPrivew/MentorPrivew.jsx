@@ -50,23 +50,21 @@ const MentorPrivew = () => {
       >
         <BlockTextLayout layoutText={arr[0]} className={styles.textBlock} />
         <div className={styles.centerBlock}>
-          {isAuthenticated && (
-            <motion.div
-              className={styles.videoWrapper}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, ease: "easeOut" }}
-            >
-              <ReactPlayer
-                url="videos/Welcome video.mp4"
-                width="100%"
-                height="100%"
-                playing={false}
-                controls={true}
-                muted={false}
-              />
-            </motion.div>
-          )}
+          <motion.div
+            className={styles.videoWrapper}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+          >
+            <ReactPlayer
+              url="videos/WelcomeVideo.mp4"
+              width="100%"
+              height="100%"
+              playing={false}
+              controls={true}
+              muted={false}
+            />
+          </motion.div>
 
           <motion.button
             className={styles.learnMoreBtn}

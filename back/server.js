@@ -377,17 +377,19 @@ botAuth.on("callback_query", async (query) => {
 
 app.get("/api/check-reset-status/:telegram", (req, res) => {
   const telegram = req.params.telegram;
-  const entry = [...pendingResets.values()].find((r) => r.telegram === telegram);
+  const entry = [...pendingResets.values()].find(
+    (r) => r.telegram === telegram
+  );
   if (!entry) return res.json({ status: "pending" });
   return res.json({ status: entry.approved ? "approved" : "pending" });
 });
-
 
 app.post("/api/confirm-new-password", async (req, res) => {
   const { telegram, newPassword } = req.body;
 
   const student = await Student.findOne({ telegram });
-  if (!student) return res.status(404).json({ error: "Пользователь не найден" });
+  if (!student)
+    return res.status(404).json({ error: "Пользователь не найден" });
 
   const hashed = await bcrypt.hash(newPassword, 10);
   student.password = hashed;
@@ -399,6 +401,123 @@ app.post("/api/confirm-new-password", async (req, res) => {
 
   res.json({ success: true });
 });
+
+bot.on("message", async (msg) => {
+  const chatId = msg.chat.id;
+  const telegram = msg.from.username;
+
+  await Student.updateOne({ telegram }, { chatId });
+
+  bot.sendMessage(
+    chatId,
+    "✅ Отлично! Теперь вы можете авторизоваться на сайте"
+  );
+});
+
+const loginCodes = new Map(); // telegram => { code, expires }
+
+app.post("/api/request-login-code", async (req, res) => {
+  const { telegram } = req.body;
+
+  const student = await Student.findOne({ telegram });
+  if (!student || !student.chatId)
+    return res
+      .status(404)
+      .json({ error: "Пользователь не найден или не связался с ботом" });
+
+  const code = Math.floor(100000 + Math.random() * 900000).toString();
+  loginCodes.set(telegram, { code, expires: Date.now() + 5 * 60 * 1000 });
+
+  await botAuth.sendMessage(student.chatId, `🔐 Ваш код для входа: ${code}`);
+
+  return res.json({ success: true });
+});
+
+app.post("/api/verify-login-code", async (req, res) => {
+  const { telegram, code } = req.body;
+  const entry = loginCodes.get(telegram);
+
+  if (!entry || entry.code !== code || Date.now() > entry.expires) {
+    return res.status(401).json({ error: "Неверный или просроченный код" });
+  }
+
+  const student = await Student.findOne({ telegram });
+  if (!student) return res.status(404).json({ error: "Пользователь не найден" });
+
+  const token = jwt.sign(
+    { id: student._id, telegram: student.telegram },
+    process.env.JWT_SECRET
+  );
+
+  loginCodes.delete(telegram);
+
+  res.json({
+    success: true,
+    token,
+    student: {
+      id: student._id,
+      firstName: student.firstName,
+      lastName: student.lastName,
+      telegram: student.telegram,
+      email: student.email,
+    },
+  });
+});
+
+bot.on("message", async (msg) => {
+  const chatId = msg.chat.id;
+  const telegram = msg.from.username;
+  const text = msg.text;
+
+  // Сохраняем chatId при первом сообщении
+  await Student.updateOne({ telegram }, { chatId });
+
+  // Приветственное сообщение (если новое)
+  if (text === "/start") {
+    bot.sendMessage(chatId, "✅ Вы успешно подключились к системе! Теперь можете авторизоваться на сайте.");
+    return;
+  }
+
+  // ChatGPT часть
+  await saveMessage(chatId, text, "user");
+  const context = await getMessagesByTelegramId(chatId);
+
+  const completion = await client.chat.completions.create({
+    messages: [
+      { role: "developer", content: mainPromt },
+      ...context.slice(-20),
+      {
+        role: "developer",
+        content: `!!! Пиши ответы в json формате:
+{
+  "textContent": "твое сообщение",
+  "buttons": []
+}`,
+      },
+    ],
+    model: "gpt-4.1",
+    store: true,
+  });
+
+  const parsed = JSON.parse(completion.choices[0].message.content);
+
+  await saveMessage(chatId, parsed.textContent, "assistant");
+
+  if (parsed.buttons?.length) {
+    const inlineKeyboard = parsed.buttons.map((btn) => [
+      {
+        text: btn,
+        callback_data: btn.toLowerCase().replace(/\s+/g, "_").slice(0, 64),
+      },
+    ]);
+    bot.sendMessage(chatId, parsed.textContent, {
+      reply_markup: { inline_keyboard: inlineKeyboard },
+    });
+  } else {
+    bot.sendMessage(chatId, parsed.textContent);
+  }
+});
+
 
 
 const PORT = process.env.PORT || 5000;
