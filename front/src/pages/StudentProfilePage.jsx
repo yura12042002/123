@@ -34,7 +34,7 @@ const StudentProfilePage = () => {
     if (!token) return;
 
     axios
-      .get("http://localhost:5000/api/students/profile", {
+      .get("http://167.99.124.169:5000/api/students/profile", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setStudent(res.data.data))

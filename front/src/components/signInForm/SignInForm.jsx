@@ -24,7 +24,7 @@ const SignInForm = () => {
     if (step === "waiting" && telegramForReset) {
       interval = setInterval(async () => {
         try {
-          const res = await axios.get(`http://localhost:5000/api/check-reset-status/${telegramForReset}`);
+          const res = await axios.get(`http://167.99.124.169/api/check-reset-status/${telegramForReset}`);
           if (res.data.status === "approved") {
             setStep("reset");
             clearInterval(interval);
@@ -40,7 +40,7 @@ const SignInForm = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/api/login", formData);
+      const res = await axios.post("http://167.99.124.169:5000/api/login", formData);
       if (res.data.success) {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("student", JSON.stringify(res.data.student));
@@ -56,7 +56,7 @@ const SignInForm = () => {
   const handleRequestReset = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/request-password-reset", {
+      await axios.post("http://167.99.124.169:5000/api/request-password-reset", {
         telegram: telegramForReset,
       });
       setStep("waiting");
@@ -68,7 +68,7 @@ const SignInForm = () => {
   const handleConfirmNewPassword = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/confirm-new-password", {
+      await axios.post("http://167.99.124.169:5000/api/confirm-new-password", {
         telegram: telegramForReset,
         newPassword,
       });
