@@ -464,59 +464,59 @@ app.post("/api/verify-login-code", async (req, res) => {
   });
 });
 
-bot.on("message", async (msg) => {
-  const chatId = msg.chat.id;
-  const telegram = msg.from.username;
-  const text = msg.text;
+// botAuth.on("message", async (msg) => {
+//   const chatId = msg.chat.id;
+//   const telegram = msg.from.username;
+//   const text = msg.text;
 
-  // Сохраняем chatId при первом сообщении
-  await Student.updateOne({ telegram }, { chatId });
+//   // Сохраняем chatId при первом сообщении
+//   await Student.updateOne({ telegram }, { chatId });
 
-  // Приветственное сообщение (если новое)
-  if (text === "/start") {
-    bot.sendMessage(chatId, "✅ Вы успешно подключились к системе! Теперь можете авторизоваться на сайте.");
-    return;
-  }
+//   // Приветственное сообщение (если новое)
+//   if (text === "/start") {
+//     botAuth.sendMessage(chatId, "✅ Вы успешно подключились к системе! Теперь можете авторизоваться на сайте.");
+//     return;
+//   }
 
-  // ChatGPT часть
-  await saveMessage(chatId, text, "user");
-  const context = await getMessagesByTelegramId(chatId);
+//   // ChatGPT часть
+//   await saveMessage(chatId, text, "user");
+//   const context = await getMessagesByTelegramId(chatId);
 
-  const completion = await client.chat.completions.create({
-    messages: [
-      { role: "developer", content: mainPromt },
-      ...context.slice(-20),
-      {
-        role: "developer",
-        content: `!!! Пиши ответы в json формате:
-{
-  "textContent": "твое сообщение",
-  "buttons": []
-}`,
-      },
-    ],
-    model: "gpt-4.1",
-    store: true,
-  });
+//   const completion = await client.chat.completions.create({
+//     messages: [
+//       { role: "developer", content: mainPromt },
+//       ...context.slice(-20),
+//       {
+//         role: "developer",
+//         content: `!!! Пиши ответы в json формате:
+// {
+//   "textContent": "твое сообщение",
+//   "buttons": []
+// }`,
+//       },
+//     ],
+//     model: "gpt-4.1",
+//     store: true,
+//   });
 
-  const parsed = JSON.parse(completion.choices[0].message.content);
+//   const parsed = JSON.parse(completion.choices[0].message.content);
 
-  await saveMessage(chatId, parsed.textContent, "assistant");
+//   await saveMessage(chatId, parsed.textContent, "assistant");
 
-  if (parsed.buttons?.length) {
-    const inlineKeyboard = parsed.buttons.map((btn) => [
-      {
-        text: btn,
-        callback_data: btn.toLowerCase().replace(/\s+/g, "_").slice(0, 64),
-      },
-    ]);
-    bot.sendMessage(chatId, parsed.textContent, {
-      reply_markup: { inline_keyboard: inlineKeyboard },
-    });
-  } else {
-    bot.sendMessage(chatId, parsed.textContent);
-  }
-});
+//   if (parsed.buttons?.length) {
+//     const inlineKeyboard = parsed.buttons.map((btn) => [
+//       {
+//         text: btn,
+//         callback_data: btn.toLowerCase().replace(/\s+/g, "_").slice(0, 64),
+//       },
+//     ]);
+//     bot.sendMessage(chatId, parsed.textContent, {
+//       reply_markup: { inline_keyboard: inlineKeyboard },
+//     });
+//   } else {
+//     bot.sendMessage(chatId, parsed.textContent);
+//   }
+// });
 
 
 

@@ -2,10 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./StudentProfilePage.module.css";
 import axios from "axios";
+import Modal from "../components/telegramModal/TelegramModal"; // Создадим ниже
 
 const StudentProfilePage = () => {
   const [sessionTime, setSessionTime] = useState(0);
   const [student, setStudent] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
   const navigate = useNavigate();
 
   const [resources] = useState([
@@ -31,7 +34,7 @@ const StudentProfilePage = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (!token) return;
+    if (!token) return navigate("/");
 
     axios
       .get("http://167.99.124.169:5000/api/students/profile", {
@@ -48,8 +51,9 @@ const StudentProfilePage = () => {
   }, []);
 
   const handleLogout = () => {
+    localStorage.removeItem("student");
     localStorage.removeItem("token");
-    window.location.href = "/login";
+    window.location.reload();
   };
 
   const handleBackToMain = () => {
@@ -57,7 +61,9 @@ const StudentProfilePage = () => {
   };
 
   if (!student) {
-    return <div className={styles.loading}>⏳ Загружаем профиль ученика...</div>;
+    return (
+      <div className={styles.loading}>⏳ Загружаем профиль ученика...</div>
+    );
   }
 
   return (
@@ -65,7 +71,9 @@ const StudentProfilePage = () => {
       <header className={styles.header}>
         <div>
           <h1 className={styles.pageTitle}>👨‍🎓 Профиль ученика</h1>
-          <p className={styles.sessionTime}>⏱ Время на сайте: {sessionTime} сек</p>
+          <p className={styles.sessionTime}>
+            ⏱ Время на сайте: {sessionTime} сек
+          </p>
         </div>
         <div className={styles.status}>
           <span className={styles.badge}>Активен</span>
@@ -81,10 +89,18 @@ const StudentProfilePage = () => {
       <section className={styles.profileSection}>
         <div className={styles.avatar}></div>
         <div className={styles.info}>
-          <h2 className={styles.name}>{student.firstName} {student.lastName}</h2>
-          <p><strong>Возраст:</strong> {student.age} лет</p>
-          <p><strong>Электронная почта:</strong> {student.email}</p>
-          <p><strong>Telegram:</strong> @{student.telegram}</p>
+          <h2 className={styles.name}>
+            {student.firstName} {student.lastName}
+          </h2>
+          <p>
+            <strong>Возраст:</strong> {student.age} лет
+          </p>
+          <p>
+            <strong>Электронная почта:</strong> {student.email}
+          </p>
+          <p>
+            <strong>Telegram:</strong> @{student.telegram}
+          </p>
         </div>
         <div className={styles.progress}>
           <h3>📈 Прогресс</h3>
@@ -102,7 +118,10 @@ const StudentProfilePage = () => {
             <li key={i} className={styles.skillItem}>
               {skill.name}
               <div className={styles.skillBar}>
-                <div className={styles.skillFill} style={{ width: `${skill.level}%` }}></div>
+                <div
+                  className={styles.skillFill}
+                  style={{ width: `${skill.level}%` }}
+                ></div>
               </div>
             </li>
           ))}
@@ -122,8 +141,13 @@ const StudentProfilePage = () => {
 
       <section className={styles.nextTask}>
         <h3>🧩 Ближайшее задание</h3>
-        <p><strong>Задание:</strong> Сделать ToDo на React с сохранением в localStorage</p>
-        <p><strong>Срок:</strong> до 15 июня</p>
+        <p>
+          <strong>Задание:</strong> Сделать ToDo на React с сохранением в
+          localStorage
+        </p>
+        <p>
+          <strong>Срок:</strong> до 15 июня
+        </p>
       </section>
 
       <section className={styles.motivation}>
@@ -144,6 +168,22 @@ const StudentProfilePage = () => {
           ))}
         </ul>
       </section>
+
+      <section className={styles.telegramSection}>
+        <h3>🤖 Авторизация через Telegram</h3>
+        <p>
+          Если ты хочешь входить через Telegram — нажми кнопку ниже и следуй
+          инструкциям.
+        </p>
+        <button
+          className={styles.telegramButton}
+          onClick={() => setShowModal(true)}
+        >
+          Привязать Telegram-бота
+        </button>
+      </section>
+
+      {showModal && <Modal onClose={() => setShowModal(false)} />}
 
       <footer className={styles.footer}>
         <p>Сделано с ❤️ для развития учеников</p>
