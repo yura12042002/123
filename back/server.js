@@ -402,7 +402,7 @@ app.post("/api/confirm-new-password", async (req, res) => {
   res.json({ success: true });
 });
 
-bot.on("message", async (msg) => {
+botAuth.on("message", async (msg) => {
   const chatId = msg.chat.id;
   const telegram = msg.from.username;
 
