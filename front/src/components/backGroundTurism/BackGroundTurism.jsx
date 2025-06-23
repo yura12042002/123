@@ -7,6 +7,7 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 
 const LandingLoFi = () => {
   const [isModalOpen, setIsModalOpen] = useState(null);
+  const [videoSrc, setVideoSrc] = useState("/videos/bg1.mp4");
 
   const closeModal = () => setIsModalOpen(null);
 
@@ -17,7 +18,7 @@ const LandingLoFi = () => {
     if (!video) return;
 
     video.currentTime = 5;
-    video.playbackRate = 1.5;
+    video.playbackRate = 0.75;
 
     const handleTimeUpdate = () => {
       if (video.currentTime >= 45) {
@@ -31,19 +32,69 @@ const LandingLoFi = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setVideoSrc(
+        window.innerWidth <= 768 ? "/videos/bg10.mp4" : "/videos/bg10.mp4"
+      );
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.load();
+
+    const handleLoaded = () => {
+      video.currentTime = 5;
+      video.playbackRate = 0.75;
+      video.play().catch((err) => {
+        console.warn("Автозапуск отклонён:", err);
+      });
+    };
+
+    video.addEventListener("loadeddata", handleLoaded);
+    return () => {
+      video.removeEventListener("loadeddata", handleLoaded);
+    };
+  }, [videoSrc]);
+
+  const [isVideo, setIsVideo] = useState(true);
+
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setIsVideo((prev) => !prev);
+  //   }, 5000); // каждые 20 секунд
+
+  //   return () => clearInterval(interval);
+  // }, []);
+
   return (
     <div className={styles.wrapper}>
-      <video
-        ref={videoRef}
-        className={styles.videoBackground}
-        autoPlay
-        muted
-        loop
-        playsInline
-      >
-        <source src="/videos/vidio-output.mp4" type="video/mp4" />
-        Ваш браузер не поддерживает видео.
-      </video>
+      {isVideo ? (
+        <video
+          ref={videoRef}
+          className={styles.videoBackground}
+          autoPlay
+          muted
+          loop
+          playsInline
+        >
+          <source src={videoSrc} type="video/mp4" />
+          Ваш браузер не поддерживает видео.
+        </video>
+      ) : (
+        <img
+          src="/videos/bg5.png"
+          alt="Фоновое изображение"
+          className={styles.videoBackground}
+        />
+      )}
 
       <div className={styles.overlay}></div>
 
