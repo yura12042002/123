@@ -35,7 +35,7 @@ const LandingLoFi = () => {
   useEffect(() => {
     const handleResize = () => {
       setVideoSrc(
-        window.innerWidth <= 768 ? "/videos/bg10.mp4" : "/videos/bg10.mp4"
+        window.innerWidth <= 768 ? "/videos/bg10.mp4" : "/videos/bg1.mp4"
       );
     };
 
