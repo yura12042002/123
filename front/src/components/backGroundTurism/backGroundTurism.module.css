@@ -20,16 +20,12 @@
   height: 100%;
   object-fit: cover;
   z-index: -2;
-  filter: brightness(0.8) contrast(1);
-}
-
-.overlay {
-  background: rgba(20, 18, 18, 0.3);
+  filter: brightness(0.7) contrast(1);
 }
 
 .container {
   position: relative;
-  max-width: 860px;
+  max-width: 900px;
   padding: 4rem 2rem;
   margin: 0 auto;
   color: #f4ede7;
@@ -43,7 +39,7 @@
 }
 
 .lead {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   text-align: center;
   margin-bottom: 2.5rem;
   color: #e9e3dc;
@@ -55,7 +51,7 @@
 }
 
 .subtitle {
-  font-size: 1.7rem;
+  font-size: 2rem;
   margin-bottom: 1rem;
   color: #ffeccf;
   border-left: 4px solid #ffd3a0;
@@ -63,7 +59,7 @@
 }
 
 .paragraph {
-  font-size: 1.15rem;
+  font-size: 1.4rem;
   line-height: 1.9;
   margin-bottom: 1.2rem;
   color: #e7dfd8;
@@ -79,11 +75,11 @@
   padding-left: 1.2rem;
   position: relative;
   margin-bottom: 0.7rem;
-  font-size: 1.1rem;
+  font-size: 1.25rem;
 }
 
 .footerNote {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   text-align: center;
   padding-top: 2rem;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -132,7 +128,7 @@ a:hover {
   background-color: #fff0dd;
   color: #3b2f1d;
   padding: 0.8rem 1.4rem;
-  font-size: 1.1rem;
+  font-size: 1.5rem;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -198,7 +194,7 @@ a:hover {
 
 .caption {
   margin-top: 12px;
-  font-size: 1.05rem;
+  font-size: 1.5rem;
   color: #f0e8dc;
   text-align: center;
   font-style: italic;
@@ -251,7 +247,7 @@ a:hover {
 
 .routeCaption {
   margin-top: 0.8rem;
-  font-size: 0.95rem;
+  font-size: 1.4rem;
   color: #e9dfd4;
   font-style: italic;
   line-height: 1.4;
@@ -280,7 +276,7 @@ a:hover {
 
 .routeCaption {
   margin-top: 1rem;
-  font-size: 1rem;
+  font-size: 1.5rem;
   color: #e9dfd4;
   font-style: italic;
   line-height: 1.6;
@@ -292,9 +288,9 @@ a:hover {
 .paragraph,
 .list li,
 .footerNote {
-  text-shadow: 5px 5px 15px rgba(0, 0, 0, 0.7), 5px 5px 15px rgba(0, 0, 0, 0.5);
+  text-shadow: 2px 2px 4px rgb(255, 255, 255, 0.3),
+    2px 2px 4px rgb(255, 255, 255, 0.3);
 }
-
 
 @media (max-width: 760px) {
   body {
@@ -397,6 +393,33 @@ a:hover {
   .paragraph,
   .list li,
   .footerNote {
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8), 0 6px 16px rgba(255, 255, 255, 0.6);
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8),
+      0 6px 16px rgba(255, 255, 255, 0.6);
+  }
+}
+
+.list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.wrapper {
+  -webkit-overflow-scrolling: touch;
+}
+
+.wrapper {
+  overflow-y: auto;
+  scrollbar-width: none;
+  scroll-behavior: smooth; 
+  overscroll-behavior: none;
+}
+
+.wrapper::-webkit-scrollbar {
+  display: none;
+}
+@media (max-width: 760px) {
+  .videoBackground {
+    filter: brightness(1) contrast(1);
+    object-position: 75% center;
   }
 }

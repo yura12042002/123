@@ -89,21 +89,6 @@ const Header = () => {
     [memoizedNodes, memoizedEdges]
   );
 
-  useEffect(() => {
-    window.addEventListener("error", (e) => {
-      if (
-        e.message ===
-        "ResizeObserver loop completed with undelivered notifications"
-      ) {
-        e.stopPropagation();
-        e.preventDefault();
-      }
-    });
-
-    return () => {
-      window.removeEventListener("error", () => {});
-    };
-  }, []);
 
   useEffect(() => {
     window.addEventListener("error", (e) => {

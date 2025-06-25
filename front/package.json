@@ -7,6 +7,7 @@
     "@react-spring/web": "^9.7.5",
     "@react-three/drei": "^10.1.2",
     "@react-three/fiber": "^9.1.2",
+    "@studio-freight/lenis": "^1.0.42",
     "@tanstack/react-query": "^5.75.7",
     "@testing-library/react": "^16.2.0",
     "@use-gesture/react": "^10.3.1",
