@@ -340,7 +340,7 @@ a:hover {
 
 @media (max-width: 760px) {
   .videoBackground {
-    filter: brightness(1) contrast(1);
+    filter: brightness(0.6) contrast(1);
   }
   body {
     font-size: 20px;
