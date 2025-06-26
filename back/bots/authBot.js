@@ -1,7 +1,9 @@
 const TelegramBot = require("node-telegram-bot-api");
 const Student = require("../models/Student");
 
-const botAuth = new TelegramBot(process.env.BOT_TOKEN_AUTHORIZE, { polling: true });
+const botAuth = new TelegramBot(process.env.BOT_TOKEN_AUTHORIZE, {
+  polling: true,
+});
 const adminId = process.env.ADMIN_TELEGRAM_ID;
 
 // Временные хранилища для запросов
@@ -33,29 +35,43 @@ botAuth.on("callback_query", async (query) => {
 
     if (action === "approve") {
       try {
-        const existing = await Student.findOne({ telegram: studentData.telegram });
+        const existing = await Student.findOne({
+          telegram: studentData.telegram,
+        });
         if (existing) {
-          await botAuth.editMessageText("⚠️ Этот Telegram уже зарегистрирован", {
-            chat_id: chatId,
-            message_id: messageId,
-          });
+          await botAuth.editMessageText(
+            "⚠️ Этот Telegram уже зарегистрирован",
+            {
+              chat_id: chatId,
+              message_id: messageId,
+            }
+          );
           pendingRegistrations.delete(requestId);
           return;
         }
 
         const bcrypt = require("bcrypt");
         const hashedPassword = await bcrypt.hash(studentData.password, 10);
-        const student = new Student({ ...studentData, password: hashedPassword });
+        const student = new Student({
+          ...studentData,
+          password: hashedPassword,
+        });
         await student.save();
 
-        await botAuth.editMessageText("✅ Регистрация подтверждена и сохранена в БД", {
-          chat_id: chatId,
-          message_id: messageId,
-        });
+        await botAuth.editMessageText(
+          "✅ Регистрация подтверждена и сохранена в БД",
+          {
+            chat_id: chatId,
+            message_id: messageId,
+          }
+        );
 
         pendingRegistrations.delete(requestId);
       } catch (err) {
-        await botAuth.sendMessage(chatId, `❌ Ошибка при сохранении: ${err.message}`);
+        await botAuth.sendMessage(
+          chatId,
+          `❌ Ошибка при сохранении: ${err.message}`
+        );
       }
     }
 
@@ -111,5 +127,9 @@ botAuth.on("message", async (msg) => {
     );
   }
 });
-
-module.exports = botAuth;
+module.exports = {
+  botAuth,
+  pendingRegistrations,
+  pendingResets,
+  loginCodes,
+};
