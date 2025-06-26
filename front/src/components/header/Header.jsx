@@ -50,7 +50,7 @@ const Header = () => {
   useEffect(() => {
     if (isOpen) {
       setNodes([]);
-      setEdges([]);
+
 
       const nodeTimeouts = [];
       roadmapNodes.forEach((node, index) => {
@@ -61,16 +61,10 @@ const Header = () => {
       });
 
       const edgeTimeouts = [];
-      roadmapEdges.forEach((edge, index) => {
-        const timeout = setTimeout(() => {
-          setEdges((prev) => [...prev, edge]);
-        }, roadmapNodes.length * 100 + index * 50);
-        edgeTimeouts.push(timeout);
-      });
 
       return () => {
         nodeTimeouts.forEach(clearTimeout);
-        edgeTimeouts.forEach(clearTimeout);
+
       };
     }
   }, [isOpen]);

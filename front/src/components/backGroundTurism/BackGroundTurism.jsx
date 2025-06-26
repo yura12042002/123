@@ -100,11 +100,11 @@ const LandingLoFi = () => {
     const lenis = new Lenis({
       duration: 2.2,
 
-      lerp: 0.04, 
+      lerp: 0.04,
 
-      wheelMultiplier: 0.6, 
+      wheelMultiplier: 0.6,
 
-      touchMultiplier: 0.6, 
+      touchMultiplier: 0.6,
       smoothTouch: true,
 
       easing: (t) => 1 - Math.pow(1 - t, 4),
@@ -121,7 +121,6 @@ const LandingLoFi = () => {
 
   return (
     <div className={styles.wrapper}>
-      
       {isVideo ? (
         <video
           ref={videoRef}
@@ -145,9 +144,7 @@ const LandingLoFi = () => {
       <div className={styles.overlay}></div>
 
       <section className={styles.container}>
-        <h1 className={styles.title}>
-          мини-тур в Добрянку
-        </h1>
+        <h1 className={styles.title}>мини-тур в Добрянку</h1>
 
         <p className={styles.lead}>
           Тур с проживанием в Добрянке на 1–3 дня: сапы утром и вечером, лес
@@ -165,9 +162,7 @@ const LandingLoFi = () => {
               Тихие заводи Камы и зеркальный пруд — идеальны для медленных
               маршрутов.
             </li>
-            <li>
-              Набережная, парк и старые улочки.
-            </li>
+            <li>Набережная, парк и старые улочки.</li>
             <li>Всего час от Перми — близко, но ощущается как другой мир.</li>
           </ul>
         </div>
@@ -176,9 +171,7 @@ const LandingLoFi = () => {
         <div className={styles.section}>
           <h2 className={styles.subtitle}>Что дарят сапы</h2>
           <ul className={styles.list}>
-            <li>
-              Лёгкий старт — встанет даже новичок.
-            </li>
+            <li>Лёгкий старт — встанет даже новичок.</li>
             <li>
               Полная тишина: доска скользит без мотора, слышно только шорох
               воды.
@@ -211,8 +204,8 @@ const LandingLoFi = () => {
         <div className={styles.section}>
           <h2 className={styles.subtitle}>Кому подойдёт</h2>
           <p className={styles.paragraph}>
-            Тем, кто хочет выдохнуть. Тем, кто не ищет экстрим, а тянется к
-            покою. Тем, кто ценит простоту и воду.
+            Тем, кто хочет «выдохнуть» и оставить телефон на беззвучном.
+            Никакого экстрима — только вода, лес и лайтовое движение.
           </p>
         </div>
 
@@ -370,11 +363,7 @@ const LandingLoFi = () => {
           <h2 className={styles.subtitle}>Контакт</h2>
           <p className={styles.paragraph}>
             Если хочешь узнать подробности — пиши в Telegram:{" "}
-            <a
-              href="https://t.me/SupDobrBot"
-              target="_blank"
-              rel="noreferrer"
-            >
+            <a href="https://t.me/SupDobrBot" target="_blank" rel="noreferrer">
               @SupDobrBot
             </a>
             <br />
