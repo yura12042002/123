@@ -2,11 +2,14 @@ const TelegramBot = require("node-telegram-bot-api");
 const Student = require("../models/Student");
 
 const botAuth = new TelegramBot(process.env.BOT_TOKEN_AUTHORIZE, {
-  polling: true,
+  polling: {
+    interval: 1000, 
+    autoStart: true,
+  },
 });
+
 const adminId = process.env.ADMIN_TELEGRAM_ID;
 
-// Временные хранилища для запросов
 const pendingRegistrations = new Map();
 const pendingResets = new Map();
 const loginCodes = new Map();
