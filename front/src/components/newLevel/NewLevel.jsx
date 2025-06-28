@@ -140,6 +140,7 @@ const NewLevel = () => {
           <DraggableBlock key={index} layoutText={el} index={index} />
         ))}
       </div>
+     
     </div>
   );
 };

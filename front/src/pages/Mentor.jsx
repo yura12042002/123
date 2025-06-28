@@ -4,15 +4,17 @@ import NewLevel from "../components/newLevel/NewLevel";
 import ReviewsBlock from "../components/reviewsBlock/ReviewsBlock";
 import StudentsWork from "../components/studentsWorks/StudentsWork";
 import { reviews } from "../data/reviewData";
-
+import ExperienceSection from "../components/experienceSection/ExperienceSection";
 
 const Mentor = () => {
   return (
     <>
       <MentorPrivew />
-      <NewLevel />
+
+      {/* <NewLevel /> */}
       <StudentsWork />
       <ReviewsBlock reviews={reviews} />
+      <ExperienceSection />
 
       {/* <SliderMainPage /> */}
     </>

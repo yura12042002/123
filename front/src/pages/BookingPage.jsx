@@ -17,7 +17,7 @@ const BookingPage = () => {
     const fetchBooked = async () => {
       try {
         const res = await fetch(
-          "http://localhost:5000/api/bookings/unavailable"
+          "http://167.99.124.169:5000/api/bookings/unavailable"
         );
         const data = await res.json();
         const parsed = data.map(({ from, to }) => ({
@@ -66,7 +66,7 @@ const BookingPage = () => {
     };
 
     try {
-      const res = await fetch("http://localhost:5000/api/bookings", {
+      const res = await fetch("http://167.99.124.169:5000/api/bookings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
