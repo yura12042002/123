@@ -5,10 +5,13 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import Lenis from "@studio-freight/lenis";
+import { useNavigate } from "react-router-dom";
 
 const LandingLoFi = () => {
   const [isModalOpen, setIsModalOpen] = useState(null);
   const [videoSrc, setVideoSrc] = useState("/videos/bg1.mp4");
+
+  const navigate = useNavigate();
 
   const closeModal = () => setIsModalOpen(null);
 
@@ -358,6 +361,17 @@ const LandingLoFi = () => {
             </div>
           </div>
         )}
+
+        <div className={styles.section}>
+          <h2 className={styles.subtitle}>Забронировать тур</h2>
+          <p className={styles.paragraph}>выбери даты и количество гостей.</p>
+          <button
+            className={styles.photoButton}
+            onClick={() => navigate("/booking")}
+          >
+            Забронировать
+          </button>
+        </div>
 
         <div className={styles.section}>
           <h2 className={styles.subtitle}>Контакт</h2>

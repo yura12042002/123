@@ -28,6 +28,7 @@ jobs:
             echo "BOT_TOKEN_TURISM=${{ secrets.BOT_TOKEN_TURISM }}" >> .env
             echo "BOT_TOKEN_AUTHORIZE=${{ secrets.BOT_TOKEN_AUTHORIZE }}" >> .env
             echo "ADMIN_TELEGRAM_ID=${{ secrets.ADMIN_TELEGRAM_ID }}" >> .env
+            echo "BOT_TOKEN_BOOKING=${{ secrets.BOT_TOKEN_BOOKING }}" >> .env
             echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
 
             echo "Stopping old containers..."
