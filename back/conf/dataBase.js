@@ -6,7 +6,6 @@ dotenv.config();
 const initializeDB = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URI, {
-      
     }
     );
     console.log("База данных успешно подключена");
