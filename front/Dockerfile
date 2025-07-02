@@ -1,18 +1,35 @@
-# build environment
-FROM node as build
+# Build stage
+FROM node:18-alpine as build
+
+# Set working directory
 WORKDIR /app
-ENV PATH /app/node_modules/.bin:$PATH
-COPY package.json ./
-COPY package-lock.json ./
-RUN npm ci --silent
-RUN npm install react-scripts --silent
-COPY . ./
+
+# Copy package files
+COPY package.json package-lock.json ./
+
+# Install dependencies with legacy peer deps flag
+RUN npm install --legacy-peer-deps
+
+# Copy source code
+COPY . .
+
+# Set environment variables for build
 ENV NODE_OPTIONS=--openssl-legacy-provider
+
+# Build the application
 RUN npm run build
 
-FROM mhart/alpine-node
-RUN yarn global add serve
-WORKDIR /app
-COPY --from=build /app/build .
-EXPOSE 8888
-CMD ["serve", "-p", "3000", "-s", "."]
+# Production stage
+FROM nginx:alpine
+
+# Copy built files to nginx html directory
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Copy nginx configuration (optional - will use default if not provided)
+# COPY nginx.conf /etc/nginx/nginx.conf
+
+# Expose port 80
+EXPOSE 80
+
+# Start nginx
+CMD ["nginx", "-g", "daemon off;"]

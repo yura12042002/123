@@ -1,4 +1,4 @@
-version: '3.3'
+version: "3.3"
 
 services:
   backend:
@@ -8,3 +8,10 @@ services:
       - "5000:5000"
     env_file:
       - .env
+
+  frontend:
+    image: usokolov692/frontend:main
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
