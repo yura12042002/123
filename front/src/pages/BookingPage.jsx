@@ -65,6 +65,8 @@ const BookingPage = () => {
       dateTo: range.to,
     };
 
+    console.log(payload)  
+
     try {
       const res = await fetch("http://167.99.124.169:5000/api/bookings", {
         method: "POST",
