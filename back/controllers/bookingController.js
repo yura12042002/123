@@ -5,11 +5,12 @@ const bookingBot = require("../bots/bookingBot");
 const adminId = process.env.ADMIN_TELEGRAM_ID;
 
 /**
- * Экранирует текст для MarkdownV2
+ * Экранирует текст для MarkdownV2 (Telegram)
+ * https://core.telegram.org/bots/api#markdownv2-style
  */
 function escapeMarkdown(text) {
   if (!text) return "";
-  return text.toString().replace(/([_*\[\]()~`>#+=|{}.!\\-])/g, "\\$1");
+  return text.toString().replace(/([_*\[\]()~`>#+=|{}.!\\@\-:])/g, "\\$1");
 }
 
 exports.createBooking = async (req, res) => {
@@ -79,7 +80,7 @@ exports.createBooking = async (req, res) => {
         year: "numeric",
       });
 
-    // Экранируем каждый текст
+    // Экранируем каждое поле
     const escapedName = escapeMarkdown(booking.name);
     const escapedTelegram = escapeMarkdown(booking.telegram || "не указано");
     const escapedGuests = escapeMarkdown(booking.guests);
@@ -87,19 +88,10 @@ exports.createBooking = async (req, res) => {
     const escapedTo = escapeMarkdown(formatDate(booking.dateTo));
     const escapedNow = escapeMarkdown(formatDate(new Date()));
 
-    const message = `
-🏡 *Новая бронь квартиры!*
+    // Полное сообщение
+    const message = `🏡 *Новая бронь квартиры!*\n\n👤 *Имя:* ${escapedName}\n📨 *Telegram:* ${escapedTelegram}\n👥 *Гостей:* ${escapedGuests}\n\n📅 *Период:*\nс *${escapedFrom}* по *${escapedTo}*\n\n🕒 Забронировано: ${escapedNow}`;
 
-👤 *Имя:* ${escapedName}
-📨 *Telegram:* ${escapedTelegram}
-👥 *Гостей:* ${escapedGuests}
-
-📅 *Период:*
-с *${escapedFrom}* по *${escapedTo}*
-
-🕒 Забронировано: ${escapedNow}
-`;
-
+    // Отправка администратору
     await bookingBot.sendMessage(adminId, message, {
       parse_mode: "MarkdownV2",
       reply_markup: {
