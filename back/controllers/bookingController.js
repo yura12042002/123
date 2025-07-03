@@ -1,53 +1,63 @@
-const TelegramBot = require("node-telegram-bot-api");
 const Booking = require("../models/Booking");
 const bookingBot = require("../bots/bookingBot");
 
 const adminId = process.env.ADMIN_TELEGRAM_ID;
 
-/**
- * Экранирует текст для MarkdownV2 (Telegram)
- * https://core.telegram.org/bots/api#markdownv2-style
- */
-function escapeMarkdown(text) {
-  if (!text) return "";
-  return text.toString().replace(/([_*\[\]()~`>#+=|{}.!\\@\-:])/g, "\\$1");
-}
+exports.getUnavailableDates = async (req, res) => {
+  try {
+    const bookings = await Booking.find({ status: "confirmed" });
+    const dates = bookings.map((b) => ({
+      from: b.dateFrom,
+      to: b.dateTo,
+    }));
+    res.json(dates);
+  } catch (err) {
+    console.error("Ошибка получения дат:", err.message);
+    res.status(500).json({ message: "Ошибка получения дат" });
+  }
+};
 
 exports.createBooking = async (req, res) => {
   try {
     const { name, telegram, guests, dateFrom, dateTo } = req.body;
 
-    // Валидации
+    // Проверка наличия обязательных полей
     if (!name || !dateFrom || !dateTo) {
       return res.status(400).json({ message: "Имя и даты обязательны" });
     }
 
+    // Проверка имени
     if (typeof name !== "string" || name.trim().length < 2) {
       return res.status(400).json({ message: "Некорректное имя" });
     }
 
+    // Проверка количества гостей
     const guestsNumber = Number(guests);
     if (!guestsNumber || guestsNumber < 1 || guestsNumber > 4) {
       return res.status(400).json({ message: "Гостей должно быть от 1 до 4" });
     }
 
+    // Преобразуем даты
     const from = new Date(dateFrom);
     const to = new Date(dateTo);
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0); // убираем время
 
+    // Дата начала >= сегодня
     if (from < today) {
       return res
         .status(400)
         .json({ message: "Нельзя бронировать задним числом" });
     }
 
+    // Дата окончания >= даты начала
     if (to < from) {
       return res
         .status(400)
         .json({ message: "Дата окончания не может быть раньше начала" });
     }
 
+    // Продолжительность ≤ 7 дней
     const diffDays = (to - from) / (1000 * 60 * 60 * 24);
     if (diffDays > 7) {
       return res
@@ -55,9 +65,12 @@ exports.createBooking = async (req, res) => {
         .json({ message: "Максимальная продолжительность — 7 дней" });
     }
 
+    // Проверка на пересечения с другими подтверждёнными бронями
     const conflict = await Booking.findOne({
       status: "confirmed",
-      $or: [{ dateFrom: { $lte: to }, dateTo: { $gte: from } }],
+      $or: [
+        { dateFrom: { $lte: to }, dateTo: { $gte: from } }, // пересекаются
+      ],
     });
 
     if (conflict) {
@@ -80,25 +93,26 @@ exports.createBooking = async (req, res) => {
         year: "numeric",
       });
 
-    // Экранируем каждое поле
-    const escapedName = escapeMarkdown(booking.name);
-    const escapedTelegram = escapeMarkdown(booking.telegram || "не указано");
-    const escapedGuests = escapeMarkdown(booking.guests);
-    const escapedFrom = escapeMarkdown(formatDate(booking.dateFrom));
-    const escapedTo = escapeMarkdown(formatDate(booking.dateTo));
-    const escapedNow = escapeMarkdown(formatDate(new Date()));
+    const message = `
+🏡 *Новая бронь квартиры!*
 
-    // Полное сообщение
-    const message = `🏡 *Новая бронь квартиры!*\n\n👤 *Имя:* ${escapedName}\n📨 *Telegram:* ${escapedTelegram}\n👥 *Гостей:* ${escapedGuests}\n\n📅 *Период:*\nс *${escapedFrom}* по *${escapedTo}*\n\n🕒 Забронировано: ${escapedNow}`;
+👤 *Имя:* ${booking.name}
+📨 *Telegram:* ${booking.telegram || "не указано"}
+👥 *Гостей:* ${booking.guests}
 
-    // Отправка администратору
-    await bookingBot.sendMessage(adminId, message, {
-      parse_mode: "MarkdownV2",
+📅 *Период:*
+с *${formatDate(booking.dateFrom)}* по *${formatDate(booking.dateTo)}*
+
+🕒 Забронировано: ${formatDate(new Date())}
+`;
+
+    await bookingBot.sendMessage(process.env.ADMIN_TELEGRAM_ID, message, {
+      parse_mode: "Markdown",
       reply_markup: {
         inline_keyboard: [
           [
-            { text: "✅ Принять", callback_data: `approve:${booking._id}` },
-            { text: "❌ Отклонить", callback_data: `reject:${booking._id}` },
+            { text: "✅ Принять", callback_data: `approve_${booking._id}` },
+            { text: "❌ Отклонить", callback_data: `reject_${booking._id}` },
           ],
         ],
       },
