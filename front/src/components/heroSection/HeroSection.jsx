@@ -33,7 +33,7 @@ const HeroSection = () => {
     <section className={styles.heroSection}>
       <div className={styles.leftBlock}>
         <h1 className={styles.title}>
-          Привет! Я Юрий — наставник по фронтенду
+          Привет! Я Юрий — ментор по фронтенду
         </h1>
         <p className={styles.description}>
           Уже более 1 года и 8 месяцев я помогаю новичкам осваивать HTML, CSS,
