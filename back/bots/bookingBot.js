@@ -4,12 +4,15 @@ const Booking = require("../models/Booking");
 const token = process.env.BOT_TOKEN_BOOKING;
 const bot = new TelegramBot(token, { polling: true });
 
-// Экранирование спецсимволов для MarkdownV2
+/**
+ * Экранирует спецсимволы для MarkdownV2
+ * https://core.telegram.org/bots/api#markdownv2-style
+ */
 function escapeMarkdown(text) {
   return text.replace(/[_*[\]()~`>#+=|{}.!\\-]/g, "\\$&");
 }
 
-// Обработка inline-кнопок (подтвердить или отклонить бронь)
+// Обработка inline-кнопок (подтверждение или отклонение брони)
 bot.on("callback_query", async (query) => {
   const chatId = query.message.chat.id;
   const data = query.data;
@@ -28,7 +31,7 @@ bot.on("callback_query", async (query) => {
       await booking.save();
       await bot.sendMessage(
         chatId,
-        `✅ Бронь подтверждена для *${escapedName}*`,
+        `✅ Бронь подтверждена для ${escapedName}`,
         { parse_mode: "MarkdownV2" }
       );
     }
@@ -36,14 +39,12 @@ bot.on("callback_query", async (query) => {
     if (action === "reject") {
       booking.status = "rejected";
       await booking.save();
-      await bot.sendMessage(
-        chatId,
-        `❌ Бронь отклонена для *${escapedName}*`,
-        { parse_mode: "MarkdownV2" }
-      );
+      await bot.sendMessage(chatId, `❌ Бронь отклонена для ${escapedName}`, {
+        parse_mode: "MarkdownV2",
+      });
     }
 
-    // Убираем кнопки после действия
+    // Удаляем кнопки после действия
     await bot.editMessageReplyMarkup(
       { inline_keyboard: [] },
       {
@@ -51,10 +52,12 @@ bot.on("callback_query", async (query) => {
         message_id: query.message.message_id,
       }
     );
-
   } catch (err) {
-    console.error("Ошибка обработки callback:", err.message);
-    bot.sendMessage(chatId, "⚠️ Произошла ошибка при обработке.");
+    console.error("Ошибка обработки callback:", err);
+    await bot.sendMessage(
+      chatId,
+      "⚠️ Произошла внутренняя ошибка при обработке запроса."
+    );
   }
 });
 
