@@ -4,9 +4,9 @@ const Booking = require("../models/Booking");
 const token = process.env.BOT_TOKEN_BOOKING;
 const bot = new TelegramBot(token, { polling: true });
 
-// Функция экранирования спецсимволов для Markdown
+// Экранирование спецсимволов для MarkdownV2
 function escapeMarkdown(text) {
-  return text.replace(/[_*[\]()~`>#+\-=|{}.!]/g, "\\$&");
+  return text.replace(/[_*[\]()~`>#+=|{}.!\\-]/g, "\\$&");
 }
 
 // Обработка inline-кнопок (подтвердить или отклонить бронь)
@@ -29,7 +29,7 @@ bot.on("callback_query", async (query) => {
       await bot.sendMessage(
         chatId,
         `✅ Бронь подтверждена для *${escapedName}*`,
-        { parse_mode: "Markdown" }
+        { parse_mode: "MarkdownV2" }
       );
     }
 
@@ -39,7 +39,7 @@ bot.on("callback_query", async (query) => {
       await bot.sendMessage(
         chatId,
         `❌ Бронь отклонена для *${escapedName}*`,
-        { parse_mode: "Markdown" }
+        { parse_mode: "MarkdownV2" }
       );
     }
 
