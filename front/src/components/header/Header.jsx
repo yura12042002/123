@@ -39,9 +39,12 @@ const Header = () => {
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
   const [student, setStudent] = useState(null);
+  const [showRoadmap, setShowRoadmap] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen((prev) => !prev);
+    setShowRoadmap(false);
+    setEdges([]);
   };
 
   const memoizedNodes = useMemo(() => nodes, [nodes]);
@@ -50,7 +53,6 @@ const Header = () => {
   useEffect(() => {
     if (isOpen) {
       setNodes([]);
-
 
       const nodeTimeouts = [];
       roadmapNodes.forEach((node, index) => {
@@ -64,7 +66,6 @@ const Header = () => {
 
       return () => {
         nodeTimeouts.forEach(clearTimeout);
-
       };
     }
   }, [isOpen]);
@@ -82,7 +83,6 @@ const Header = () => {
     ),
     [memoizedNodes, memoizedEdges]
   );
-
 
   useEffect(() => {
     window.addEventListener("error", (e) => {
@@ -132,7 +132,7 @@ const Header = () => {
       }
     }
   }, []);
-  console.log(student)
+  console.log(student);
   return (
     <header className={style.header}>
       <div className={style.headerContent}>
@@ -202,9 +202,54 @@ const Header = () => {
                   {tab === "№ РОУДМАП" && (
                     <div
                       className={style.roadmapContainer}
-                      style={{ width: "100%", height: "100%" }}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexDirection: "column",
+                      }}
                     >
-                      {memoizedReactFlow}
+                      {!showRoadmap ? (
+                        <button
+                          onClick={() => {
+                            setShowRoadmap(true);
+                            setEdges(roadmapEdges); // только тут вставляем edges
+                          }}
+                      style={{
+  padding: "14px 32px",
+  fontSize: "1rem",
+  borderRadius: "16px",
+  border: "1px solid rgba(255, 255, 255, 0.2)",
+  backgroundColor: "rgba(255, 255, 255, 0.1)",
+  color: "#000",
+  cursor: "pointer",
+  backdropFilter: "blur(6px)",
+  WebkitBackdropFilter: "blur(6px)",
+  transition: "all 0.3s ease",
+  boxShadow: "inset 0 0 0 rgba(255, 255, 255, 0), 0 4px 10px rgba(0, 0, 0, 0.3)",
+  fontWeight: "500",
+  letterSpacing: "0.5px",
+  textShadow: "0 1px 2px rgba(0, 0, 0, 0.4)",
+}}
+onMouseEnter={(e) => {
+  e.target.style.backgroundColor = "rgba(255, 255, 255, 0.18)";
+  e.target.style.boxShadow = "0 6px 16px rgba(0, 0, 0, 0.3)";
+  e.target.style.transform = "translateY(-2px)";
+}}
+onMouseLeave={(e) => {
+  e.target.style.backgroundColor = "rgba(255, 255, 255, 0.1)";
+  e.target.style.boxShadow = "0 4px 10px rgba(0, 0, 0, 0.3)";
+  e.target.style.transform = "translateY(0)";
+}}
+
+                        >
+                          Показать роудмап
+                        </button>
+                      ) : (
+                        memoizedReactFlow
+                      )}
                     </div>
                   )}
                 </motion.div>
